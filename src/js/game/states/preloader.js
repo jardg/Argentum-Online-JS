@@ -1,4 +1,4 @@
-var GraphicLoader = require('../loaders/GraphicLoader.js')
+var GraphicLoader = require('../loaders/graphic/BinaryGraphicLoader.js')
   , GraphicStorage = require('../storage/graphic/MemoryGraphicStorage.js')
   , preloader = {};
 
@@ -9,6 +9,7 @@ preloader.preload = function () {
   graphicLoader.load(null, function(storage) {
     console.log(storage.count() + ' graphics succesfully loaded.');
   });
+
   this.game.load.image('logo', 'images/phaser.png#grunt-cache-bust');
 };
 

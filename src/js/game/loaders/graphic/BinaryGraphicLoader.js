@@ -14,7 +14,7 @@ var files = require('../config/files.js')
  * @param storage
  * @constructor
  */
-var GraphicLoader = function GraphicLoader(game, storage) {
+var BinaryGraphicLoader = function BinaryGraphicLoader(game, storage) {
   this.game = game;
   this._path = files.graphics;
   this.storage = storage;
@@ -26,7 +26,7 @@ var GraphicLoader = function GraphicLoader(game, storage) {
  * @param onLoadCallback
  * @returns {*|Phaser.Loader|{}}
  */
-GraphicLoader.prototype.load = function(onProcessed, onLoaded) {
+BinaryGraphicLoader.prototype.load = function(onProcessed, onLoaded) {
   this.addListener('onProcessed', this.onProcessed);
   this.addListener('onProcessed', onProcessed);
   this.addListener('onLoaded', onLoaded);
@@ -40,7 +40,7 @@ GraphicLoader.prototype.load = function(onProcessed, onLoaded) {
  * @param data
  * @returns {*}
  */
-GraphicLoader.prototype.process = function(key, buffer) {
+BinaryGraphicLoader.prototype.process = function(key, buffer) {
   var reader = new BufferAdapter(buffer, true);
   var header = reader.getNextInt32();
   var count = reader.getNextInt32();
@@ -59,7 +59,7 @@ GraphicLoader.prototype.process = function(key, buffer) {
  * Callback for processed graphics
  * @param graphic
  */
-GraphicLoader.prototype.onProcessed = function(graphic) {
+BinaryGraphicLoader.prototype.onProcessed = function(graphic) {
   this.storage.add(graphic.grh, graphic);
 };
 
@@ -67,4 +67,4 @@ GraphicLoader.prototype.onProcessed = function(graphic) {
  * Exports object constructor
  * type {Function}
  */
-module.exports = GraphicLoader;
+module.exports = BinaryGraphicLoader;

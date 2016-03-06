@@ -41,7 +41,7 @@ BufferAdapter.prototype.isOutOfBounds = function(offset, length) {
 
 /**
  * Obtains and returns the next int16 from the dataView buffer
- * @param [number, optional] offset
+ * @param {Number} [offset=undefined]
  * @returns {Number,boolean}
  */
 BufferAdapter.prototype.getNextInt16 = function(offset) {
@@ -56,7 +56,7 @@ BufferAdapter.prototype.getNextInt16 = function(offset) {
 
 /**
  * Obtains and returns the next int16 from the dataView buffer
- * @param [number, optional] offset
+ * @param {Number} [offset=undefined]
  * @returns {Number,boolean}
  */
 BufferAdapter.prototype.getNextInt32 = function(offset) {
@@ -71,7 +71,7 @@ BufferAdapter.prototype.getNextInt32 = function(offset) {
 
 /**
  * Obtains and returns the next int16 from the dataView buffer
- * @param [number, optional] offset
+ * @param {Number} [offset=undefined]
  * @returns {Number,boolean}
  */
 BufferAdapter.prototype.getNextFloat32 = function(offset) {
