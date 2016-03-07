@@ -5,33 +5,33 @@
 var files = require('../../config/files.js')
   , EventManager = require('../../events/EventManager.js')
   , BufferAdapter = require('../../adapters/BufferAdapter.js')
-  , Graphic = require('../../models/Graphic.js')
+  , Body = require('../../models/Body.js')
   , _ = require('lodash');
 
 /**
- * Constructor for game Graphics Data Loader
+ * Constructor for game Body Data Loader
  * @param game
  * @param storage
  * @constructor
  */
-var BinaryGraphicLoader = function BinaryGraphicLoader(game, storage) {
+var BinaryBody = function BinaryBody(game, storage) {
   this.game = game;
-  this._path = files.graphics;
+  this._path = files.bodies;
   this.storage = storage;
   EventManager.eventify(this);
 };
 
 /**
- * Performs the load of all graphics binary files
+ * Performs the load of all bodys binary files
  * @param onLoadCallback
  * @returns {*|Phaser.Loader|{}}
  */
-BinaryGraphicLoader.prototype.load = function(onProcessed, onLoaded) {
+BinaryBody.prototype.load = function(onProcessed, onLoaded) {
   this.addListener('onProcessed', this.onProcessed);
   this.addListener('onProcessed', onProcessed);
   this.addListener('onLoaded', onLoaded);
 
-  return this.game.load.binary('graphics', this._path, this.process, this);
+  return this.game.load.binary('bodies', this._path, this.process, this);
 };
 
 /**
@@ -40,15 +40,15 @@ BinaryGraphicLoader.prototype.load = function(onProcessed, onLoaded) {
  * @param data
  * @returns {*}
  */
-BinaryGraphicLoader.prototype.process = function(key, buffer) {
+BinaryBody.prototype.process = function(key, buffer) {
   var reader = new BufferAdapter(buffer, true);
-  var header = reader.getNextInt32();
-  var count = reader.getNextInt32();
+  var header = reader.skipBytes(Body.HEADER_SIZE);
+  var count = reader.getNextInt16();
 
   for(var i in _.range(1, count)) {
-    var graphic = new Graphic(i);
-    graphic.loader.load(reader);
-    this.fire('onProcessed', [graphic], this);
+    var body = new Body(i);
+    body.loader.load(reader);
+    this.fire('onProcessed', [body], this);
   }
 
   this.fire('onLoaded', [this.storage], this);
@@ -56,15 +56,15 @@ BinaryGraphicLoader.prototype.process = function(key, buffer) {
 };
 
 /**
- * Callback for processed graphics
- * @param graphic
+ * Callback for processed bodys
+ * @param body
  */
-BinaryGraphicLoader.prototype.onProcessed = function(graphic) {
-  this.storage.add(graphic.grh, graphic);
+BinaryBody.prototype.onProcessed = function(body) {
+  this.storage.add(body.grh, body);
 };
 
 /**
  * Exports object constructor
  * type {Function}
  */
-module.exports = BinaryGraphicLoader;
+module.exports = BinaryBody;
