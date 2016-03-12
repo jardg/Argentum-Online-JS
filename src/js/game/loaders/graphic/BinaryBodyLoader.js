@@ -14,7 +14,7 @@ var files = require('../../config/files.js')
  * @param storage
  * @constructor
  */
-var BinaryBody = function BinaryBody(game, storage) {
+var BinaryBodyLoader = function BinaryBodyLoader(game, storage) {
   this.game = game;
   this._path = files.bodies;
   this.storage = storage;
@@ -26,7 +26,7 @@ var BinaryBody = function BinaryBody(game, storage) {
  * @param onLoadCallback
  * @returns {*|Phaser.Loader|{}}
  */
-BinaryBody.prototype.load = function(onProcessed, onLoaded) {
+BinaryBodyLoader.prototype.load = function(onProcessed, onLoaded) {
   this.addListener('onProcessed', this.onProcessed);
   this.addListener('onProcessed', onProcessed);
   this.addListener('onLoaded', onLoaded);
@@ -40,7 +40,7 @@ BinaryBody.prototype.load = function(onProcessed, onLoaded) {
  * @param data
  * @returns {*}
  */
-BinaryBody.prototype.process = function(key, buffer) {
+BinaryBodyLoader.prototype.process = function(key, buffer) {
   var reader = new BufferAdapter(buffer, true);
   var header = reader.skipBytes(Body.HEADER_SIZE);
   var count = reader.getNextInt16();
@@ -59,7 +59,7 @@ BinaryBody.prototype.process = function(key, buffer) {
  * Callback for processed bodys
  * @param body
  */
-BinaryBody.prototype.onProcessed = function(body) {
+BinaryBodyLoader.prototype.onProcessed = function(body) {
   this.storage.add(body.grh, body);
 };
 
@@ -67,4 +67,4 @@ BinaryBody.prototype.onProcessed = function(body) {
  * Exports object constructor
  * type {Function}
  */
-module.exports = BinaryBody;
+module.exports = BinaryBodyLoader;
