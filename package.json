@@ -44,6 +44,7 @@
     "grunt-contrib-watch": "*",
     "grunt-open": "*",
     "grunt-pngmin": "^1.0.2",
+    "ini": "^1.3.4",
     "lodash": "*"
   }
 }

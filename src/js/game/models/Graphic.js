@@ -11,18 +11,78 @@ var _ = require('lodash');
  * @constructor
  */
 var Graphic = function(id) {
+  /**
+   * Unique id of this model
+   * @type {number}
+   */
   this._id = id;
+
+  /**
+   * Graphic index number
+   * @type {number}
+   */
   this.grh = 0;
+
+  /**
+   * File number to obtain the graphic
+   * @type {number}
+   */
   this.fileNumber = 0;
+
+  /**
+   * Source offset X of the graphic in the file
+   * @type {number}
+   */
   this.sourceX = 0;
+
+  /**
+   * Source offset Y of the graphic in the file
+   * @type {number}
+   */
   this.sourceY = 0;
+
+  /**
+   * Pixel width of this graphic
+   * @type {number}
+   */
   this.pixelWidth = 0;
+
+  /**
+   * Pixel height of this graphic
+   * @type {number}
+   */
   this.pixelHeight = 0;
+
+  /**
+   * Frame data array, contains all animations frames
+   * @type {Array}
+   */
   this.frames = [];
+
+  /**
+   * Speed modifier of this graphic animation
+   * @type {number}
+   */
   this.speed = 0.0;
+
+  /**
+   * Tile width proportion between pixel width
+   * and hardcoded game tile width
+   * @type {number}
+   */
   this.tileWidth = 0.0;
+  /**
+   * Tile height proportion between pixel height
+   * and hardcoded game tile height
+   * @type {number}
+   */
   this.tileHeight = 0.0;
 
+  /**
+   * Internal abstracted graphic loader
+   *      (using hardcoded buffer loader for binary loaders)
+   * @type {Graphic.BufferLoader}
+   */
   this.loader = new Graphic.BufferLoader(this);
 };
 

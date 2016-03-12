@@ -11,11 +11,41 @@ var _ = require('lodash');
  * @constructor
  */
 var Body = function(id) {
+  /**
+   * Unique identifier of this model
+   * @type {number}
+   */
   this._id = id;
-  this.graphics = {};
+
+  /**
+   * Graphic index for each of the graphics stored in this model
+   * @type {{north: number, west: number, south: number, east: number}}
+   */
+  this.graphics =
+  { north: 0
+    , west: 0
+    , south: 0
+    , east: 0
+  };
+
+  /**
+   * Head offset X of this body
+   * @type {number}
+   */
   this.headOffsetX = 0;
+
+  /**
+   * Head offset Y of this body
+   * @type {number}
+   */
   this.headOffsetY = 0;
 
+
+  /**
+   * Internal abstracted body graphic loader
+   *      (using hardcoded buffer loader for binary loaders)
+   * @type {Body.BufferLoader}
+   */
   this.loader = new Body.BufferLoader(this);
 };
 
