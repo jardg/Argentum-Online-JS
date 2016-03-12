@@ -17,7 +17,7 @@ var files = require('../../config/files.js')
 var BinaryGraphicLoader = function BinaryGraphicLoader(game, storage) {
   this.game = game;
   this._path = files.graphics;
-  this.storage = storage;
+  this._storage = storage;
   EventManager.eventify(this);
 };
 
@@ -51,7 +51,7 @@ BinaryGraphicLoader.prototype.process = function(key, buffer) {
     this.fire('onProcessed', [graphic], this);
   }
 
-  this.fire('onLoaded', [this.storage], this);
+  this.fire('onLoaded', [this._storage], this);
   return buffer;
 };
 
@@ -60,7 +60,7 @@ BinaryGraphicLoader.prototype.process = function(key, buffer) {
  * @param graphic
  */
 BinaryGraphicLoader.prototype.onProcessed = function(graphic) {
-  this.storage.add(graphic.grh, graphic);
+  this._storage.add(graphic.grh, graphic);
 };
 
 /**

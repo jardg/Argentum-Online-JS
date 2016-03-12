@@ -5,33 +5,33 @@
 var files = require('../../config/files.js')
   , EventManager = require('../../events/EventManager.js')
   , BufferAdapter = require('../../adapters/BufferAdapter.js')
-  , Body = require('../../models/Body.js')
+  , Head = require('../../models/Head.js')
   , _ = require('lodash');
 
 /**
- * Constructor for game Body Data Loader
+ * Constructor for game Head Data Loader
  * @param game
  * @param storage
  * @constructor
  */
-var BinaryBodyLoader = function BinaryBodyLoader(game, storage) {
+var BinaryHeadLoader = function BinaryHeadLoader(game, storage) {
   this.game = game;
-  this._path = files.bodies;
+  this._path = files.heads;
   this._storage = storage;
   EventManager.eventify(this);
 };
 
 /**
- * Performs the load of all body binary files
+ * Performs the load of all heads binary files
  * @param onLoadCallback
  * @returns {*|Phaser.Loader|{}}
  */
-BinaryBodyLoader.prototype.load = function(onProcessed, onLoaded) {
+BinaryHeadLoader.prototype.load = function(onProcessed, onLoaded) {
   this.addListener('onProcessed', this.onProcessed);
   this.addListener('onProcessed', onProcessed);
   this.addListener('onLoaded', onLoaded);
 
-  return this.game.load.binary('bodies', this._path, this.process, this);
+  return this.game.load.binary('heads', this._path, this.process, this);
 };
 
 /**
@@ -40,15 +40,15 @@ BinaryBodyLoader.prototype.load = function(onProcessed, onLoaded) {
  * @param data
  * @returns {*}
  */
-BinaryBodyLoader.prototype.process = function(key, buffer) {
+BinaryHeadLoader.prototype.process = function(key, buffer) {
   var reader = new BufferAdapter(buffer, true);
-  var header = reader.skipBytes(Body.HEADER_SIZE);
+  var header = reader.skipBytes(Head.HEADER_SIZE);
   var count = reader.getNextInt16();
 
   for(var i in _.range(1, count)) {
-    var body = new Body(i);
-    body.loader.load(reader);
-    this.fire('onProcessed', [body], this);
+    var head = new Head(i);
+    head.loader.load(reader);
+    this.fire('onProcessed', [head], this);
   }
 
   this.fire('onLoaded', [this._storage], this);
@@ -56,15 +56,15 @@ BinaryBodyLoader.prototype.process = function(key, buffer) {
 };
 
 /**
- * Callback for processed body
- * @param body
+ * Callback for processed heads
+ * @param head
  */
-BinaryBodyLoader.prototype.onProcessed = function(body) {
-  this._storage.add(body.grh, body);
+BinaryHeadLoader.prototype.onProcessed = function(head) {
+  this._storage.add(head.grh, head);
 };
 
 /**
  * Exports object constructor
  * type {Function}
  */
-module.exports = BinaryBodyLoader;
+module.exports = BinaryHeadLoader;
