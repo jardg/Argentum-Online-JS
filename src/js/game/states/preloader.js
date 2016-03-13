@@ -8,6 +8,8 @@ var GraphicLoader = require('../loaders/graphic/BinaryGraphicLoader.js')
   , HeadStorage = require('../storage/head/MemoryHeadStorage.js')
   , HelmetLoader = require('../loaders/helmet/BinaryHelmetLoader.js')
   , HelmetStorage = require('../storage/helmet/MemoryHelmetStorage.js')
+  , ShieldLoader = require('../loaders/shield/BinaryShieldLoader.js')
+  , ShieldStorage = require('../storage/shield/MemoryShieldStorage.js')
   , preloader = {};
 
 /**
@@ -22,11 +24,13 @@ preloader.preload = function () {
     , helmetStorage = new HelmetStorage()
     , headStorage = new HeadStorage()
     , weaponStorage = new WeaponStorage()
+    , shieldStorage = new ShieldStorage()
     , graphicLoader = new GraphicLoader(this.game, graphicStorage)
     , bodyLoader = new BodyLoader(this.game, bodyStorage)
     , headLoader = new HeadLoader(this.game, headStorage)
     , helmetLoader = new HelmetLoader(this.game, helmetStorage)
-    , weaponLoader = new WeaponLoader(this.game, weaponStorage);
+    , weaponLoader = new WeaponLoader(this.game, weaponStorage)
+    , shieldLoader = new ShieldLoader(this.game, shieldStorage);
 
   graphicLoader.load(null, function(storage) {
     console.info(storage.count() + ' graphics succesfully loaded.');
@@ -42,6 +46,9 @@ preloader.preload = function () {
   });
   weaponLoader.load(null, function(storage) {
     console.info(storage.count() + ' weapons succesfully loaded.');
+  });
+  shieldLoader.load(null, function(storage) {
+    console.info(storage.count() + ' shields succesfully loaded.');
   });
 
   this.game.load.image('logo', 'images/phaser.png#grunt-cache-bust');
