@@ -65,6 +65,6 @@ BinaryBodyLoader.prototype.onProcessed = function(body) {
 
 /**
  * Exports object constructor
- * type {Function}
+ * @type {Function}
  */
 module.exports = BinaryBodyLoader;
