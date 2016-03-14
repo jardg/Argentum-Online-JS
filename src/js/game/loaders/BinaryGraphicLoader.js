@@ -2,21 +2,22 @@
  * Module dependencies
  * @type {configuration|exports|module.exports}
  */
-var files = require('../../config/files.js')
-  , EventManager = require('../../events/EventManager.js')
-  , BufferAdapter = require('../../adapters/BufferAdapter.js')
-  , Graphic = require('../../models/Graphic.js')
+var loaders = require('../config/loaders.js')
+  , EventManager = require('../managers/EventManager.js')
+  , BufferAdapter = require('../adapters/BufferAdapter.js')
+  , Graphic = require('../models/Graphic.js')
   , _ = require('lodash');
 
 /**
  * Constructor for game Graphics Data Loader
  * @param game
  * @param storage
+ * @param path
  * @constructor
  */
-var BinaryGraphicLoader = function BinaryGraphicLoader(game, storage) {
+var BinaryGraphicLoader = function BinaryGraphicLoader(game, storage, path) {
   this.game = game;
-  this._path = files.graphics;
+  this._path = path || loaders.graphic.path;
   this._storage = storage;
   EventManager.eventify(this);
 };

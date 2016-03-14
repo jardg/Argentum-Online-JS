@@ -2,9 +2,9 @@
  * Module dependencies
  * @type {configuration|exports|module.exports}
  */
-var files = require('../../config/files.js')
-  , EventManager = require('../../events/EventManager.js')
-  , Weapon = require('../../models/Weapon.js')
+var loaders = require('../config/loaders.js')
+  , EventManager = require('../managers/EventManager.js')
+  , Weapon = require('../models/Weapon.js')
   , ini = require('rt-node-ini')
   , _ = require('lodash');
 
@@ -12,11 +12,12 @@ var files = require('../../config/files.js')
  * Constructor for game Weapon Data Loader
  * @param game
  * @param storage
+ * @param path
  * @constructor
  */
-var BinaryWeaponLoader = function BinaryWeaponLoader(game, storage) {
+var BinaryWeaponLoader = function BinaryWeaponLoader(game, storage, path) {
   this.game = game;
-  this._path = files.weapons;
+  this._path =  path || loaders.weapon.path;
   this._storage = storage;
   EventManager.eventify(this);
 };

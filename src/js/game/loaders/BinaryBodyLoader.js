@@ -2,21 +2,22 @@
  * Module dependencies
  * @type {configuration|exports|module.exports}
  */
-var files = require('../../config/files.js')
-  , EventManager = require('../../events/EventManager.js')
-  , BufferAdapter = require('../../adapters/BufferAdapter.js')
-  , Body = require('../../models/Body.js')
+var loaders = require('../config/loaders.js')
+  , EventManager = require('../managers/EventManager.js')
+  , BufferAdapter = require('../adapters/BufferAdapter.js')
+  , Body = require('../models/Body.js')
   , _ = require('lodash');
 
 /**
  * Constructor for game Body Data Loader
  * @param game
  * @param storage
+ * @param path
  * @constructor
  */
-var BinaryBodyLoader = function BinaryBodyLoader(game, storage) {
+var BinaryBodyLoader = function BinaryBodyLoader(game, storage, path) {
   this.game = game;
-  this._path = files.bodies;
+  this._path = path || loaders.body.path;
   this._storage = storage;
   EventManager.eventify(this);
 };

@@ -2,21 +2,22 @@
  * Module dependencies
  * @type {configuration|exports|module.exports}
  */
-var files = require('../../config/files.js')
-  , EventManager = require('../../events/EventManager.js')
-  , BufferAdapter = require('../../adapters/BufferAdapter.js')
-  , Helmet = require('../../models/Helmet.js')
+var loaders = require('../config/loaders.js')
+  , EventManager = require('../managers/EventManager.js')
+  , BufferAdapter = require('../adapters/BufferAdapter.js')
+  , Helmet = require('../models/Helmet.js')
   , _ = require('lodash');
 
 /**
  * Constructor for game Helmet Data Loader
  * @param game
  * @param storage
+ * @param path
  * @constructor
  */
-var BinaryHelmetLoader = function BinaryHelmetLoader(game, storage) {
+var BinaryHelmetLoader = function BinaryHelmetLoader(game, storage, path) {
   this.game = game;
-  this._path = files.helmets;
+  this._path = path || loaders.helmet.path;
   this._storage = storage;
   EventManager.eventify(this);
 };

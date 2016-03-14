@@ -2,9 +2,9 @@
  * Module dependencies
  * @type {configuration|exports|module.exports}
  */
-var files = require('../../config/files.js')
-  , EventManager = require('../../events/EventManager.js')
-  , Shield = require('../../models/Shield.js')
+var loaders = require('../config/loaders.js')
+  , EventManager = require('../managers/EventManager.js')
+  , Shield = require('../models/Shield.js')
   , ini = require('rt-node-ini')
   , _ = require('lodash');
 
@@ -12,11 +12,12 @@ var files = require('../../config/files.js')
  * Constructor for game Shield Data Loader
  * @param game
  * @param storage
+ * @param path
  * @constructor
  */
-var BinaryShieldLoader = function BinaryShieldLoader(game, storage) {
+var BinaryShieldLoader = function BinaryShieldLoader(game, storage, path) {
   this.game = game;
-  this._path = files.shields;
+  this._path = path || loaders.shield.path;
   this._storage = storage;
   EventManager.eventify(this);
 };
