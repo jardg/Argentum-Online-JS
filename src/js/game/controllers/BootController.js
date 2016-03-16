@@ -9,19 +9,19 @@ var Controller = require('./Controller.js')
   , _ = require('lodash');
 
 /**
- * BootController class - Extends abstract controller constructor
+ * BootController class - Extends abstract controller
  * @type {*}
  */
-var  BootController = function(game) {
+var BootController = function(game) {
   Controller.call(this, [game]);
 };
 
 /**
- * Extend BootController prototype using abstract Controller
+ * Extends BootController prototype using abstract Controller
  * @type {Controller}
  */
  BootController.prototype = _.create(Controller.prototype, {
-  'construtor':  BootController
+  'construtor': BootController
 });
 
 /**
