@@ -58,7 +58,7 @@ LoadManager.prototype.load = function(loader, key) {
   try {
     loader.load(null, function(storage) {
       console.info('[managers/LoadManager.js]: Successfully loaded ' + storage.count() +
-                   ' objects from loader key [' + key + ']');
+                   ' objects from loader with key [' + key + ']');
     });
   } catch(err) {
     console.error('[managers/LoadManager.js]: Loader with key [' +
