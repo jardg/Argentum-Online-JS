@@ -30,13 +30,19 @@ var Map = function(id) {
  * Constant map width in tiles
  * @type {number}
  */
-Map.MAP_TILE_WIDTH = 100;
+Map.prototype.MAP_TILE_WIDTH = 100;
 
 /**
  * Constant map height in tiles
  * @type {number}
  */
-Map.MAP_TILE_HEIGHT = 100;
+Map.prototype.MAP_TILE_HEIGHT = 100;
+
+/**
+ * Map harcoded header size in bytes
+ * @type {number}
+ */
+Map.prototype.HEADER_SIZE = 263 + (2 * 5);
 
 /**
  * Map.BufferLoader Class - Exports a buffer loader class
@@ -60,7 +66,13 @@ Map.BufferLoader = function(map) {
  * @param reader
  */
 Map.BufferLoader.prototype.load = function(reader) {
-  _.range('')
+  reader.skipBytes(this.HEADER_SIZE);
+
+  for(var x = 0; x < this.MAP_TILE_WIDTH; x++) {
+    for(var y = 0; y < this.MAP_TILE_HEIGHT; y++) {
+      
+    }
+  }
 };
 
 /**

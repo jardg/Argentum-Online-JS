@@ -2,7 +2,7 @@
  * Module dependencies
  * @type {configuration|exports|module.exports}
  */
-var loaders = require('../config/loaders.js')
+var config = require('../config/maps.js')
   , EventManager = require('../managers/EventManager.js')
   , BufferAdapter = require('../adapters/BufferAdapter.js')
   , Map = require('../models/Map.js')
@@ -11,15 +11,27 @@ var loaders = require('../config/loaders.js')
 /**
  * Constructor for game Map Data Loader
  * @param game
+ * @param id
  * @param storage
  * @param path
  * @constructor
  */
 var BinaryMapLoader = function BinaryMapLoader(game, storage, path) {
   this.game = game;
-  this._path = path || loaders.map.path;
+  this._path = path || config.path;
   this._storage = storage;
   EventManager.eventify(this);
+};
+
+/**
+ * Generates a map filename using value of format in
+ * maps configuration file and appending the result
+ * to the previously loaded path string
+ * @param mapId
+ * @returns {string}
+ */
+BinaryMapLoader.prototype.getMapPath = function(mapId) {
+  return this._path + config.format.replace(/\{number}/, mapId.toString());
 };
 
 /**
@@ -27,12 +39,11 @@ var BinaryMapLoader = function BinaryMapLoader(game, storage, path) {
  * @param onLoadCallback
  * @returns {*|Phaser.Loader|{}}
  */
-BinaryMapLoader.prototype.load = function(onProcessed, onLoaded) {
-  this.addListener('onProcessed', this.onProcessed);
-  this.addListener('onProcessed', onProcessed);
+BinaryMapLoader.prototype.load = function(map, onLoaded) {
+  this.addListener('onLoaded', this.onLoaded);
   this.addListener('onLoaded', onLoaded);
 
-  return this.game.load.binary('maps', this._path, this.process, this);
+  return this.game.load.binary('map' + map, this.getMapPath(map), this.process, this);
 };
 
 /**
@@ -43,25 +54,20 @@ BinaryMapLoader.prototype.load = function(onProcessed, onLoaded) {
  */
 BinaryMapLoader.prototype.process = function(key, buffer) {
   var reader = new BufferAdapter(buffer, true);
-  var header = reader.getNextInt32();
-  var count = reader.getNextInt32();
 
-  for(var i in _.range(1, count)) {
-    var map = new Map(i);
-    map.loader.load(reader);
-    this.fire('onProcessed', [map], this);
-  }
+  var map = new config.model(key);
+  map.loader.load(reader);
 
-  this.fire('onLoaded', [this._storage], this);
+  this.fire('onLoaded', [map], this);
   return buffer;
 };
 
 /**
- * Callback for processed maps
+ * Callback for loaded maps
  * @param map
  */
-BinaryMapLoader.prototype.onProcessed = function(map) {
-  this._storage.add(map.grh, map);
+BinaryMapLoader.prototype.onLoaded = function(map) {
+  this._storage.add(map.id, map);
 };
 
 /**

@@ -11,16 +11,6 @@ module.exports = {
   },
 
   /**
-   * Configuration for Map loader
-   * @type {*}
-   */
-  map: {
-    driver: require('../loaders/BinaryMapLoader.js')
-    , storage: require('../storage/MemoryMapStorage.js')
-    , autostart: false
-  },
-
-  /**
    * Configuration for Body loader
    * @type {*}
    */

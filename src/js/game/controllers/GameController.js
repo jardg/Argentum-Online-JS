@@ -3,7 +3,8 @@
 * @type {*}
 */
 var Controller = require('./Controller.js')
-  , _ = require('lodash');
+    , maps = require('../config/maps.js')
+    , _ = require('lodash');
 
 /**
  * GameController class - Extends abstract controller
@@ -11,6 +12,12 @@ var Controller = require('./Controller.js')
  */
 var GameController = function(game) {
   Controller.call(this, [game]);
+
+  /**
+   * Instantiates a map manager driver into this controller
+   * @type {MapManager}
+   */
+  this.map = new maps.driver();
 };
 
 /**
@@ -28,6 +35,8 @@ GameController.prototype = _.create(Controller.prototype, {
 GameController.prototype.create = function() {
   var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
   logo.anchor.setTo(0.5, 0.5);
+
+  this.map.load(1);
 };
 
 /**
