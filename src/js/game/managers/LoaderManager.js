@@ -25,13 +25,6 @@ var LoaderManager = function(game) {
    */
   this._loaders = loaders;
 
-  /**
-   * Save current instance in game singleton
-   * @type {{loaderManager: LoaderManager}|*}
-   */
-  this.game.ao.managers = this.game.ao.managers || {};
-  this.game.ao.managers.loader = this;
-
 };
 
 /**
@@ -61,6 +54,9 @@ LoaderManager.prototype.start = function() {
 LoaderManager.prototype.load = function(loader, key) {
   var storage = new loader.storage()
     , loader = new loader.driver(this.game, storage, loader.path);
+
+  this.game.ao.loaders[key] = loader;
+  this.game.ao.storage[key] = storage;
   this._loaders[key] = loader;
 
   try {

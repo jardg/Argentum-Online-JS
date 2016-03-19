@@ -57,7 +57,7 @@ BinaryMapLoader.prototype.load = function(map, onLoaded) {
 BinaryMapLoader.prototype.process = function(key, buffer) {
   var reader = new BufferAdapter(buffer, true);
 
-  var map = new this.config.model(key);
+  var map = new this.config.model(game, key);
   map.loader.load(reader);
 
   this.fire('onLoaded', [map], this);

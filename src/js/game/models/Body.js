@@ -11,6 +11,7 @@ var _ = require('lodash');
  * @constructor
  */
 var Body = function(id) {
+
   /**
    * Unique identifier of this model
    * @type {number}
@@ -47,18 +48,17 @@ var Body = function(id) {
    * @type {Body.BufferLoader}
    */
   this.loader = new Body.BufferLoader(this);
+
 };
 
 /**
  * Loads each one of this body's graphics into memory using a graphic storage
  * @param graphicStorage
  */
-Body.prototype.loadGraphics = function(graphicStorage) {
-  var graphicStorage = graphicStorage ||
-    this.game.ao.managers.loader.get('graphic')._storage;
-
+Body.prototype.loadGraphics = function(graphicStorage, textureManager) {
   _.each(this.graphics, function(graphic, key) {
     var graphic = graphicStorage.get(graphic);
+    var texture = textureManager.load(graphic.grh);
 
     this.graphics[key] = graphic;
   });
@@ -93,7 +93,6 @@ Body.BufferLoader.prototype.load = function(reader) {
   this.body.graphics['west'] = reader.getNextInt16();
   this.body.headOffsetX = reader.getNextInt16();
   this.body.headOffsetY = reader.getNextInt16();
-  this.body.loadGraphics();
 
   return this.body;
 }

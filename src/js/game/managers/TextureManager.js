@@ -37,18 +37,21 @@ var TextureManager = function(game) {
 };
 
 /**
- * Loads a given map using a given map id {map}
+ * Loads a given texture using a given grh id {texture}
  * @param grh - Key of the texture to load
  * @returns {TextureManager}
  */
 TextureManager.prototype.load = function(grh) {
   try {
-    var texture = this.loader.load(grh);
+    if(this.game.ao.storage.texture.has(grh)) {
+      console.info('[managers/TextureManager.js]: Returning texture already in storage cache.');
+      return this.game.ao.storage.texture.get(grh);
+    }
+
+    return this.loader.load(grh);
   } catch(err) {
     console.error('[managers/TextureManager.js]: Texture with key [' + grh + '] failed to load: ' + err.message);
   }
-
-  return texture;
 };
 
 /**

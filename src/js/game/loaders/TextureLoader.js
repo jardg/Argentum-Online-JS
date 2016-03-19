@@ -35,14 +35,15 @@ TextureLoader.prototype.getImagePath = function(image) {
 };
 
 /**
- * Performs the load of all textures binary files
+ * Performs the load of this texture image file
  * @param key
  * @returns {*|Phaser.Loader|{}}
  */
 TextureLoader.prototype.load = function(key) {
-  var grh = this.game.ao.managers.loader.get('graphic')._storage.get(key);
+  var grh = this.game.ao.managers.loader.get('graphic')._storage.get(key)
+    , path = this.getImagePath(grh.fileNumber);
 
-  return grh.textureLoader.load(key, this.getImagePath(key), this._storage);
+  return grh.textureLoader.load(key, path, this._storage);
 };
 
 /**

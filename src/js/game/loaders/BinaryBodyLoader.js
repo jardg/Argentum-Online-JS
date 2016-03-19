@@ -61,6 +61,10 @@ BinaryBodyLoader.prototype.process = function(key, buffer) {
  * @param body
  */
 BinaryBodyLoader.prototype.onProcessed = function(body) {
+  var graphicStorage = this.game.ao.storage.graphic
+    , textureManager = this.game.ao.managers.texture;
+
+  body.loadGraphics(graphicStorage, textureManager);
   this._storage.add(body._id, body);
 };
 

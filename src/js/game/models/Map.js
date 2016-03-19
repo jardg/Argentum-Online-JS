@@ -11,7 +11,13 @@ var Tile = require('./Tile.js')
  * @param id
  * @constructor
  */
-var Map = function(id) {
+var Map = function(game, id) {
+
+  /**
+   * Saves current game instance reference into model
+   * @type {Phaser}
+   */
+  this.game = game;
 
   /**
    * Unique identifier for this map
@@ -36,7 +42,7 @@ var Map = function(id) {
    *
    * @type {Map.BufferLoader}
    */
-  this.loader = new Map.BufferLoader(this);
+  this.loader = new Map.BufferLoader(game, this);
 
 };
 
@@ -70,26 +76,18 @@ Map.prototype.getTilePosition = function(x, y) {
 };
 
 /**
- * Loads all of this map tiles graphic models into tile instances
- * @returns {Map}
- */
-Map.prototype.loadTiles = function() {
-  var graphicStorage = this.game.ao.managers.loader.get('graphic')._storage;
-
-  _.each(this.tiles, function(tile, tileKey) {
-    tile.loadGraphics();
-  });
-
-  return this;
-};
-
-/**
  * Map.BufferLoader Class - Exports a buffer loader class
  * in use to load binary map data into memory
  * @param map
  * @constructor
  */
-Map.BufferLoader = function(map) {
+Map.BufferLoader = function(game, map) {
+
+  /**
+   * Stores game instance reference
+   * @type {Phaser}
+   */
+  this.game = game;
 
   /**
    * Internally save the map instance for edition
@@ -118,9 +116,9 @@ Map.BufferLoader.prototype.load = function(reader) {
       if((data & 4) == 4) tile.graphics[2] = reader.getNextInt16();
       if((data & 8) == 8) tile.graphics[3] = reader.getNextInt16();
       if((data & 16) == 16) tile.trigger = reader.getNextInt16();
+      tile.loadGraphics(this.game.ao.storage.graphic, this.game.ao.managers.texture);
 
       this.map.tiles[this.map.getTilePosition(x, y)] = tile;
-      this.map.tiles[this.map.getTilePosition(x, y)].loadGraphics();
     }
   }
 };

@@ -2,8 +2,7 @@
  * Module dependencies
  * @type {*}
  */
-var LoaderManager = require('../managers/LoaderManager.js')
-  , Controller = require('./Controller.js')
+var Controller = require('./Controller.js')
   , _ = require('lodash');
 
 /**
@@ -27,7 +26,7 @@ PreloadController.prototype = _.create(Controller.prototype, {
  * @returns {*}
  */
 PreloadController.prototype.preload = function() {
-  var loader = new LoaderManager(this.game);
+  var loader = this.game.ao.managers.loader;
 
   this.game.load.image('logo', 'images/phaser.png#grunt-cache-bust');
 

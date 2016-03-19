@@ -12,15 +12,13 @@ var Controller = require('./Controller.js')
  */
 var GameController = function(game) {
   Controller.call(this, [game]);
-  var maps = maps = require('../config/maps.js');
-  var textures = require('../config/textures.js');
+  var maps = require('../config/maps.js');
 
   /**
    * Instantiates a map manager driver into this controller
    * @type {MapManager}
    */
   this.map = new maps.driver(game);
-  this.textures = new textures.driver(game);
 };
 
 /**
@@ -37,7 +35,6 @@ GameController.prototype = _.create(Controller.prototype, {
  */
 GameController.prototype.preload = function() {
   this.map.load(1);
-  this.textures.load(1);
 }
 
 /**

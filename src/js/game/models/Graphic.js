@@ -12,6 +12,7 @@ var _ = require('lodash')
  * @constructor
  */
 var Graphic = function(id) {
+
   /**
    * Unique id of this model
    * @type {number}
@@ -22,7 +23,7 @@ var Graphic = function(id) {
    * Graphic index number
    * @type {number}
    */
-  this.grh = 0;
+  this.number = this.grh = 0;
 
   /**
    * File number to obtain the graphic
@@ -72,6 +73,7 @@ var Graphic = function(id) {
    * @type {number}
    */
   this.tileWidth = 0.0;
+
   /**
    * Tile height proportion between pixel height
    * and hardcoded game tile height
@@ -127,19 +129,22 @@ Graphic.TextureLoader.prototype.load = function(key, path, storage) {
 
   // Recursively load all frame animation textures
   if(this.frames.length > 0) {
-    return _.each(this.frames, function(frame) {
+    _.each(this.frames, function(frame) {
+      console.log(frame);
       self.textureLoader.load(frame, path, storage);
     });
+
+    return this.graphic;
   }
 
   texture.setFrame(new PIXI.Rectangle(
     this.graphic.sourceX, this.graphic.sourceY,
     this.graphic.pixelWidth, this.graphic.pixelHeight
   ));
-  this._storage.add(key, texture);
   this.graphic.texture = texture;
+  storage.add(key, texture);
 
-  return this.graphic.texture;
+  return this.graphic;
 };
 
 /**

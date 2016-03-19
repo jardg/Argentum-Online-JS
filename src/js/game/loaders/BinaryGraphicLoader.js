@@ -61,12 +61,6 @@ BinaryGraphicLoader.prototype.process = function(key, buffer) {
  * @param graphic
  */
 BinaryGraphicLoader.prototype.onProcessed = function(graphic) {
-  if(graphic.frames.length) {
-    graphic.frames.forEach(function(frame, key) {
-      graphic.frames[key] = this._storage.get(frame);
-    });
-  }
-
   this._storage.add(graphic.grh, graphic);
 };
 

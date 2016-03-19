@@ -2,7 +2,8 @@
  * Module imports
  * @type {*|exports|module.exports}
  */
-var Position = require('./Position.js');
+var Position = require('./Position.js')
+  , _ = require('lodash');
 
 /**
  * Tile class - Model for saving tile data
@@ -60,11 +61,7 @@ var Tile = function Tile() {
  * @param graphicStorage
  * @returns {Tile}
  */
-Tile.prototype.loadGraphics = function(graphicStorage) {
-  var graphicStorage = graphicStorage ||
-      this.game.ao.managers.loader.get('graphic')._storage
-    , textureManager = this.game.ao.managers.texture;
-
+Tile.prototype.loadGraphics = function(graphicStorage, textureManager) {
   _.each(this.graphics, function(graphic, key) {
     var graphic = graphicStorage.get(graphic);
     var texture = textureManager.load(graphic.number);

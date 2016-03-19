@@ -3,8 +3,14 @@
  * @constructor
  */
 var MemoryTextureStorage = function() {
+
+  /**
+   * Internal textures array
+   * @type {Array}
+   * @private
+   */
   this._textures = [];
-  this.length = 0;
+
 };
 
 /**
@@ -15,7 +21,6 @@ var MemoryTextureStorage = function() {
  */
 MemoryTextureStorage.prototype.add = function(index, texture) {
   this._textures[index] = texture;
-  this.length++;
   return this;
 };
 
@@ -44,7 +49,7 @@ MemoryTextureStorage.prototype.has = function(index) {
  * @returns {*}
  */
 MemoryTextureStorage.prototype.count = function() {
-  return this.length;
+  return this._textures.length;
 };
 
 /**
