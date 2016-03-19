@@ -20,7 +20,7 @@ var LoaderManager = function(game) {
 
   /**
    * Loaders found in the loaders.js configuration file
-   * @type {*|exports|module.exports}
+   * @type {*}
    * @private
    */
   this._loaders = loaders;
@@ -52,10 +52,11 @@ LoaderManager.prototype.start = function() {
  * @returns {LoaderManager}
  */
 LoaderManager.prototype.load = function(loader, key) {
-  var storage = new loader.storage()
-    , loader = new loader.driver(this.game, storage, loader.path);
+  var storage = this.game.ao.addStorage(key, loader.storage)
+    , loader = this.game.ao.addLoader(key, loader.driver, storage, loader.path);
 
   try {
+    this._loaders[key] = loader;
     loader.load(null, function(storage) {
       console.info('[managers/LoaderManager.js]: Successfully loaded ' + storage.count() +
                    ' objects from loader with key [' + key + ']');
@@ -67,6 +68,15 @@ LoaderManager.prototype.load = function(loader, key) {
 
   return this;
 };
+
+/**
+ * Obtains a loader driver from internal structure
+ * @param key
+ * @returns {*}
+ */
+LoaderManager.prototype.get = function(key) {
+  return this._loaders[key];
+}
 
 /**
  * Export this module definition

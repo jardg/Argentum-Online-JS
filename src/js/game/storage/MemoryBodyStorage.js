@@ -3,8 +3,7 @@
  * @constructor
  */
 var MemoryBodyStorage = function() {
-  this._bodies = {};
-  this.length = 0;
+  this._bodies = [];
 };
 
 /**
@@ -14,8 +13,7 @@ var MemoryBodyStorage = function() {
  * @returns {MemoryBodyStorage}
  */
 MemoryBodyStorage.prototype.add = function(index, body) {
-  this._bodies[index] = body;
-  this.length++;
+  this._bodies.splice(index, 0, body);
   return this;
 };
 
@@ -29,13 +27,21 @@ MemoryBodyStorage.prototype.get = function(index) {
 };
 
 /**
+ * Obtains all of our stored structures array
+ * @returns {{}|*}
+ */
+MemoryBodyStorage.prototype.all = function() {
+  return this._bodies;
+};
+
+/**
  * Gets the amount of bodies loaded in the
  * internal grpahics array
  *
  * @returns {*}
  */
 MemoryBodyStorage.prototype.count = function() {
-  return this.length;
+  return this._bodies.length;
 };
 
 /**

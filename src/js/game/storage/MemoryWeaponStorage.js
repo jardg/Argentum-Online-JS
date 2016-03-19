@@ -3,8 +3,7 @@
  * @constructor
  */
 var MemoryWeaponStorage = function() {
-  this._weapons = {};
-  this.length = 0;
+  this._weapons = [];
 };
 
 /**
@@ -14,9 +13,16 @@ var MemoryWeaponStorage = function() {
  * @returns {MemoryWeaponStorage}
  */
 MemoryWeaponStorage.prototype.add = function(index, weapon) {
-  this._weapons[index] = weapon;
-  this.length++;
+  this._weapons.splice(index, 0, weapon);
   return this;
+};
+
+/**
+ * Returns all of the objects in the internal array
+ * @returns {Array}
+ */
+MemoryWeaponStorage.prototype.all = function() {
+  return this._weapons;
 };
 
 /**
@@ -35,7 +41,7 @@ MemoryWeaponStorage.prototype.get = function(index) {
  * @returns {*}
  */
 MemoryWeaponStorage.prototype.count = function() {
-  return this.length;
+  return this._weapons.length;
 };
 
 /**

@@ -18,11 +18,6 @@ var StateManager = function(game) {
    */
   this.game = game;
 
-  /**
-   * Starts all game states by default
-   */
-  this.init();
-
 };
 
 /**
@@ -52,8 +47,7 @@ StateManager.prototype = {
    * @returns {StateManager}
    */
   , start: function(state) {
-    if(states.hasOwnProperty(state) &&
-       self.game.state.states.hasOwnProperty(state)) {
+    if(self.game.state.states.hasOwnProperty(state)) {
       self.game.state.start(state);
     }
 

@@ -45,6 +45,23 @@ var Weapon = function(id) {
 Weapon.HEADER_SIZE = 263;
 
 /**
+ * Fills all of the graphics in this model with the graphic
+ * model stored in game's graphic storage
+ * @param game
+ * @returns {Weapon}
+ */
+Weapon.prototype.loadGraphics = function(game) {
+  var self = this;
+
+  _.each(this.graphics, function(graphic, key) {
+    self.graphics[key] = game.ao.storage.graphic.get(graphic);
+    game.ao.managers.texture.load(self.graphics[key].grh);
+  });
+
+  return this;
+};
+
+/**
  * Weapon Buffer Loader instance
  * @param weapon
  * @constructor

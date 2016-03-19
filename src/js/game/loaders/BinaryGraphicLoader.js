@@ -25,7 +25,7 @@ var BinaryGraphicLoader = function BinaryGraphicLoader(game, storage, path) {
 /**
  * Performs the load of all graphics binary files
  * @param onLoadCallback
- * @returns {*|Phaser.Loader|{}}
+ * @returns {*|Phaserengoader|{}}
  */
 BinaryGraphicLoader.prototype.load = function(onProcessed, onLoaded) {
   this.addListener('onProcessed', this.onProcessed);
