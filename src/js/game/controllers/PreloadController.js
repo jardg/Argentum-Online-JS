@@ -2,7 +2,7 @@
  * Module dependencies
  * @type {*}
  */
-var LoadManager = require('../managers/LoadManager.js')
+var LoaderManager = require('../managers/LoaderManager.js')
   , Controller = require('./Controller.js')
   , _ = require('lodash');
 
@@ -27,7 +27,7 @@ PreloadController.prototype = _.create(Controller.prototype, {
  * @returns {*}
  */
 PreloadController.prototype.preload = function() {
-  var loader = new LoadManager(this.game);
+  var loader = new LoaderManager(this.game);
 
   this.game.load.image('logo', 'images/phaser.png#grunt-cache-bust');
 

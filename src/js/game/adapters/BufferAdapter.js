@@ -30,6 +30,12 @@ BufferAdapter.FLOAT32_LENGTH = 4;
 BufferAdapter.INT32_LENGTH = 4;
 
 /**
+ * Length in bytes of a byte data type (1 duh)
+ * @type {number}
+ */
+BufferAdapter.BYTE_LENGTH = 1;
+
+/**
  * Checks if an offset and length are out of bounds in the DataView
  * @param offset
  * @param length
@@ -38,6 +44,21 @@ BufferAdapter.INT32_LENGTH = 4;
 BufferAdapter.prototype.isOutOfBounds = function(offset, length) {
   return (offset + length > this.dataView.byteLength);
 }
+
+/**
+ * Obtains and returns the next byte from the dataView buffer
+ * @param {Number} [offset=undefined]
+ * @returns {Number,boolean}
+ */
+BufferAdapter.prototype.getNextByte = function(offset) {
+  var offset = offset || this.position;
+  if(this.isOutOfBounds(offset, BufferAdapter.BYTE_LENGTH)) return false;
+
+  var data = this.dataView.getInt8(offset);
+  this.position += BufferAdapter.BYTE_LENGTH;
+
+  return data;
+};
 
 /**
  * Obtains and returns the next int16 from the dataView buffer

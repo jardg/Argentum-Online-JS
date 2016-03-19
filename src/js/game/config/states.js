@@ -18,7 +18,7 @@ module.exports = {
    * @type {*}
    */
   preloader: {
-      controller: require('../controllers/PreloadController.js')
+    controller: require('../controllers/PreloadController.js')
   },
 
   /**

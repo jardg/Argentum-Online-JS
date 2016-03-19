@@ -6,11 +6,11 @@ var loaders = require('../config/loaders.js')
   , _ = require('lodash');
 
 /**
- * LoadManager class - Loads all assets from a configuration file
+ * LoaderManager class - Loads all assets from a configuration file
  * @param game
  * @constructor
  */
-var LoadManager = function(game) {
+var LoaderManager = function(game) {
 
   /**
    * Stores PhaserJS Game Instance
@@ -32,9 +32,9 @@ var LoadManager = function(game) {
  * This loaders are generally loaded from the 'loaders' config
  * file in your client installation path.
  *
- * @returns {LoadManager}
+ * @returns {LoaderManager}
  */
-LoadManager.prototype.start = function() {
+LoaderManager.prototype.start = function() {
   var self = this;
 
   _.each(this._loaders, function(loader, key) {
@@ -49,19 +49,19 @@ LoadManager.prototype.start = function() {
  *  structure in loaders.js configuration file).
  * @param loader
  * @param key
- * @returns {LoadManager}
+ * @returns {LoaderManager}
  */
-LoadManager.prototype.load = function(loader, key) {
+LoaderManager.prototype.load = function(loader, key) {
   var storage = new loader.storage()
     , loader = new loader.driver(this.game, storage, loader.path);
 
   try {
     loader.load(null, function(storage) {
-      console.info('[managers/LoadManager.js]: Successfully loaded ' + storage.count() +
-                   ' objects from loader key [' + key + ']');
+      console.info('[managers/LoaderManager.js]: Successfully loaded ' + storage.count() +
+                   ' objects from loader with key [' + key + ']');
     });
   } catch(err) {
-    console.error('[managers/LoadManager.js]: Loader with key [' +
+    console.error('[managers/LoaderManager.js]: Loader with key [' +
                   key + '] failed to load: ' + err.message);
   }
 
@@ -72,4 +72,4 @@ LoadManager.prototype.load = function(loader, key) {
  * Export this module definition
  * @type {Function}
  */
-module.exports = LoadManager;
+module.exports = LoaderManager;
