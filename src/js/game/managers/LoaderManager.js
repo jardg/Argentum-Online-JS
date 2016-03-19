@@ -52,11 +52,8 @@ LoaderManager.prototype.start = function() {
  * @returns {LoaderManager}
  */
 LoaderManager.prototype.load = function(loader, key) {
-  var storage = new loader.storage()
-    , loader = new loader.driver(this.game, storage, loader.path);
-
-  this.game.ao.loaders[key] = loader;
-  this.game.ao.storage[key] = storage;
+  var storage = this.game.ao.addStorage(key, loader.storage)
+    , loader = this.game.ao.addLoader(key, loader.driver, storage, loader.path);
   this._loaders[key] = loader;
 
   try {

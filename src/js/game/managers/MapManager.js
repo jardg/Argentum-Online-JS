@@ -25,13 +25,13 @@ var MapManager = function(game) {
    * Instantiates storage for maps into this manager
    * @type {MemoryMapStorage}
    */
-  this.storage = new config.storage();
+  this.storage = this.game.ao.addStorage('map', config.storage);
 
   /**
    * Instantiates loader for maps into this manager
    * @type {BinaryMapLoader}
    */
-  this.loader = new config.loader(this.game, this.storage, config.path);
+  this.loader = this.game.ao.addLoader('map', config.loader, this.storage, config.path);
 
 };
 
@@ -43,9 +43,17 @@ var MapManager = function(game) {
  */
 MapManager.prototype.load = function(map, cb) {
   try {
+    if(this.storage.has(map)) {
+      console.info('[managers/MapManager.js]: Restoring previously ' +
+        'loaded map from cache: [' + map.number + ']');
+
+      return cb(this.storage.get(map));
+    }
+
     this.loader.addListener('onLoaded', cb);
     this.loader.load(map, function(map) {
       console.info('[managers/MapManager.js]: Successfully loaded map with ID [' + map.number + ']');
+      map.loadGraphics(this.game);
     });
   } catch(err) {
     console.error('[managers/MapManager.js]: Map with ID [' + map + '] failed to load: ' + err.message);

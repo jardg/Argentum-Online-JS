@@ -11,7 +11,7 @@ var _ = require('lodash')
  * @param id
  * @constructor
  */
-var Graphic = function(id) {
+var Graphic = function Graphic(id) {
 
   /**
    * Unique id of this model
@@ -83,7 +83,7 @@ var Graphic = function(id) {
 
   /**
    * Placeholder for texture object
-   * @type {{}}
+   * @type {*|{}|PIXI.Texture}
    */
   this.texture = {};
 

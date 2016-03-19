@@ -26,11 +26,9 @@ PreloadController.prototype = _.create(Controller.prototype, {
  * @returns {*}
  */
 PreloadController.prototype.preload = function() {
-  var loader = this.game.ao.managers.loader;
-
   this.game.load.image('logo', 'images/phaser.png#grunt-cache-bust');
 
-  return loader.start();
+  return this.game.ao.managers.loader.start();
 };
 
 /**
@@ -38,6 +36,17 @@ PreloadController.prototype.preload = function() {
  * @returns {*}
  */
 PreloadController.prototype.create = function() {
+  var self = this;
+
+  _.each(this.game.ao.storage, function(storage, key) {
+    if(key === 'graphic' || key === 'texture' || key === 'map') return;
+
+    _.each(storage.all(), function(model, key) {
+      model.loadGraphics(self.game);
+      console.log(model);
+    });
+  });
+
   this.game.state.start('game');
 };
 

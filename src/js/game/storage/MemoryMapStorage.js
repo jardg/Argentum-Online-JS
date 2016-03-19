@@ -3,8 +3,7 @@
  * @constructor
  */
 var MemoryMapStorage = function() {
-  this._maps = {};
-  this.length = 0;
+  this._maps = [];
 };
 
 /**
@@ -15,7 +14,6 @@ var MemoryMapStorage = function() {
  */
 MemoryMapStorage.prototype.add = function(index, map) {
   this._maps[index] = map;
-  this.length++;
   return this;
 };
 
@@ -29,13 +27,22 @@ MemoryMapStorage.prototype.get = function(index) {
 };
 
 /**
+ * Determines whether the given map is already loaded into storage or not
+ * @param index
+ * @returns {boolean}
+ */
+MemoryMapStorage.prototype.has = function(index) {
+  return (this._maps.indexOf(index) > 0);
+}
+
+/**
  * Gets the amount of maps loaded in the
  * internal grpahics array
  *
  * @returns {*}
  */
 MemoryMapStorage.prototype.count = function() {
-  return this.length;
+  return this._maps.length;
 };
 
 /**

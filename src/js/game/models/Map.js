@@ -76,6 +76,25 @@ Map.prototype.getTilePosition = function(x, y) {
 };
 
 /**
+ * Fills all of the graphics in this model with the graphic
+ * model stored in game's graphic storage
+ * @param game
+ * @returns {Map}
+ */
+Map.prototype.loadGraphics = function(game) {
+  var self = this;
+
+  this.tiles.forEach(function(tile, key) {
+    _.each(tile.graphics, function(graphic, key) {
+      self.tiles[key].graphics[key] = game.ao.storage.graphic.get(graphic);
+      game.ao.managers.texture.load(tile.graphics[key]);
+    });
+  });
+
+  return this;
+};
+
+/**
  * Map.BufferLoader Class - Exports a buffer loader class
  * in use to load binary map data into memory
  * @param map

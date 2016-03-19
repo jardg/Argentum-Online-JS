@@ -39,7 +39,7 @@ TextureLoader.prototype.getImagePath = function(image) {
  * Performs the load of a single texture image file
  * @param {Graphic} graphic - Graphic to load texture into memory
  * @param {function} onLoaded(graphic, texture)
- * @returns {*|Phaser.Loader|{}}
+ * @returns {*}
  */
 TextureLoader.prototype.load = function(graphic, onLoaded) {
   if(! graphic.fileNumber) return null;

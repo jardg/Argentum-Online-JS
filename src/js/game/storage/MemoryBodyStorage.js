@@ -29,6 +29,14 @@ MemoryBodyStorage.prototype.get = function(index) {
 };
 
 /**
+ * Obtains all of our stored structures array
+ * @returns {{}|*}
+ */
+MemoryBodyStorage.prototype.all = function() {
+  return this._bodies;
+};
+
+/**
  * Gets the amount of bodies loaded in the
  * internal grpahics array
  *
