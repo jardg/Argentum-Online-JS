@@ -69,7 +69,7 @@ Body.prototype.loadGraphics = function(game) {
 
   _.each(this.graphics, function(graphic, key) {
     self.graphics[key] = game.ao.storage.graphic.get(graphic);
-    game.ao.managers.texture.load(graphic.grh);
+    game.ao.managers.texture.load(self.graphics[key].grh);
   });
 
   return this;

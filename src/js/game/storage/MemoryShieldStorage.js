@@ -3,8 +3,7 @@
  * @constructor
  */
 var MemoryShieldStorage = function() {
-  this._shields = {};
-  this.length = 0;
+  this._shields = [];
 };
 
 /**
@@ -15,7 +14,6 @@ var MemoryShieldStorage = function() {
  */
 MemoryShieldStorage.prototype.add = function(index, shield) {
   this._shields[index] = shield;
-  this.length++;
   return this;
 };
 
@@ -29,13 +27,21 @@ MemoryShieldStorage.prototype.get = function(index) {
 };
 
 /**
+ * Returns all of the objects in the internal array
+ * @returns {Array}
+ */
+MemoryShieldStorage.prototype.all = function() {
+  return this._shields;
+};
+
+/**
  * Gets the amount of shields loaded in the
  * internal grpahics array
  *
  * @returns {*}
  */
 MemoryShieldStorage.prototype.count = function() {
-  return this.length;
+  return this._shields.length;
 };
 
 /**

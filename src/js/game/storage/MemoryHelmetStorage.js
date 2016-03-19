@@ -3,8 +3,7 @@
  * @constructor
  */
 var MemoryHelmetStorage = function() {
-  this._helmets = {};
-  this.length = 0;
+  this._helmets = [];
 };
 
 /**
@@ -15,8 +14,15 @@ var MemoryHelmetStorage = function() {
  */
 MemoryHelmetStorage.prototype.add = function(index, helmet) {
   this._helmets[index] = helmet;
-  this.length++;
   return this;
+};
+
+/**
+ * Returns all of the objects in the internal array
+ * @returns {Array}
+ */
+MemoryHelmetStorage.prototype.all = function() {
+  return this._helmets;
 };
 
 /**
@@ -35,7 +41,7 @@ MemoryHelmetStorage.prototype.get = function(index) {
  * @returns {*}
  */
 MemoryHelmetStorage.prototype.count = function() {
-  return this.length;
+  return this._helmets.length;
 };
 
 /**

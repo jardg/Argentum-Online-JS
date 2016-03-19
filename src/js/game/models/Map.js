@@ -87,7 +87,7 @@ Map.prototype.loadGraphics = function(game) {
   this.tiles.forEach(function(tile, key) {
     _.each(tile.graphics, function(graphic, key) {
       self.tiles[key].graphics[key] = game.ao.storage.graphic.get(graphic);
-      game.ao.managers.texture.load(tile.graphics[key]);
+      game.ao.managers.texture.load(self.graphics[key].graphics[key]);
     });
   });
 
