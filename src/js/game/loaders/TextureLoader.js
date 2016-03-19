@@ -40,10 +40,9 @@ TextureLoader.prototype.getImagePath = function(image) {
  * @returns {*|Phaser.Loader|{}}
  */
 TextureLoader.prototype.load = function(key) {
-  // TODO : replace loader and storage instance public properties
-  var grh = this.game.ao.loaderManager.get('graphic')._storage.get(key);
+  var grh = this.game.ao.managers.loader.get('graphic')._storage.get(key);
 
-  return texture;
+  return grh.textureLoader.load(key, this.getImagePath(key), this._storage);
 };
 
 /**

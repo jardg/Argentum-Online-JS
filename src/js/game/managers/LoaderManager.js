@@ -20,7 +20,7 @@ var LoaderManager = function(game) {
 
   /**
    * Loaders found in the loaders.js configuration file
-   * @type {*|exports|module.exports}
+   * @type {*}
    * @private
    */
   this._loaders = loaders;
@@ -29,8 +29,8 @@ var LoaderManager = function(game) {
    * Save current instance in game singleton
    * @type {{loaderManager: LoaderManager}|*}
    */
-  this.game.ao = this.game.ao || {};
-  this.game.ao.loaderManager = this;
+  this.game.ao.managers = this.game.ao.managers || {};
+  this.game.ao.managers.loader = this;
 
 };
 

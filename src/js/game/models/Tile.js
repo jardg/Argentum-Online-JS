@@ -15,7 +15,7 @@ var Tile = function Tile() {
    * Array containing tile graphics data in each layer
    * @type {Array}
    */
-  this.graphics = [];
+  this.graphics = [0, 0, 0, 0];
 
   /**
    * Stores whether this tile is blocked or not
@@ -54,6 +54,26 @@ var Tile = function Tile() {
   this.exit = new Position(0, 0, 0);
 
 }
+
+/**
+ * Loads each one of this tile graphics into memory using a graphic storage
+ * @param graphicStorage
+ * @returns {Tile}
+ */
+Tile.prototype.loadGraphics = function(graphicStorage) {
+  var graphicStorage = graphicStorage ||
+      this.game.ao.managers.loader.get('graphic')._storage
+    , textureManager = this.game.ao.managers.texture;
+
+  _.each(this.graphics, function(graphic, key) {
+    var graphic = graphicStorage.get(graphic);
+    var texture = textureManager.load(graphic.number);
+
+    this.graphics[key] = graphic;
+  });
+
+  return this;
+};
 
 /**
  * Exports this model constructor

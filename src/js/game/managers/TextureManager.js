@@ -26,6 +26,14 @@ var TextureManager = function(game) {
    */
   this.loader = new config.loader(game, new config.storage());
 
+  /**
+   * Save this texture manager instance into our game's internal
+   * texture manager
+   * @type {{}|*|Array}
+   */
+  this.game.ao.managers = this.game.ao.managers || {};
+  this.game.ao.managers.texture = this;
+
 };
 
 /**

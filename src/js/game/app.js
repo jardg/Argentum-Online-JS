@@ -20,6 +20,7 @@
    * @type {Phaser.Game}
    */
   var game = new Phaser.Game(properties.size.x, properties.size.y, Phaser.AUTO, 'game');
+  game.ao = {};
 
 
   /**

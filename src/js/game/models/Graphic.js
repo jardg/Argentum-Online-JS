@@ -106,6 +106,11 @@ Graphic.TILE_WIDTH = 32;
  */
 Graphic.TILE_HEIGHT = 32;
 
+/**
+ * Graphic.TextureLoader class - Internal texture loader for graphics
+ * @param graphic
+ * @constructor
+ */
 Graphic.TextureLoader = function(graphic) {
   this.graphic = graphic;
 }
@@ -117,7 +122,15 @@ Graphic.TextureLoader = function(graphic) {
  * @param storage
  */
 Graphic.TextureLoader.prototype.load = function(key, path, storage) {
-  var texture = new PIXI.Texture.fromImage(this.getImagePath(key), false, PIXI.scaleModes.NEAREST);
+  var texture = new PIXI.Texture.fromImage(this.getImagePath(key), false, PIXI.scaleModes.NEAREST)
+    , self = this;
+
+  // Recursively load all frame animation textures
+  if(this.frames.length > 0) {
+    return _.each(this.frames, function(frame) {
+      self.textureLoader.load(frame, path, storage);
+    });
+  }
 
   texture.setFrame(new PIXI.Rectangle(
     this.graphic.sourceX, this.graphic.sourceY,

@@ -21,8 +21,8 @@ var Body = function(id) {
    * Graphic index for each of the graphics stored in this model
    * @type {{north: number, west: number, south: number, east: number}}
    */
-  this.graphics =
-  { north: 0
+  this.graphics = {
+      north: 0
     , west: 0
     , south: 0
     , east: 0
@@ -47,6 +47,21 @@ var Body = function(id) {
    * @type {Body.BufferLoader}
    */
   this.loader = new Body.BufferLoader(this);
+};
+
+/**
+ * Loads each one of this body's graphics into memory using a graphic storage
+ * @param graphicStorage
+ */
+Body.prototype.loadGraphics = function(graphicStorage) {
+  var graphicStorage = graphicStorage ||
+    this.game.ao.managers.loader.get('graphic')._storage;
+
+  _.each(this.graphics, function(graphic, key) {
+    var graphic = graphicStorage.get(graphic);
+
+    this.graphics[key] = graphic;
+  });
 };
 
 /**
@@ -78,6 +93,7 @@ Body.BufferLoader.prototype.load = function(reader) {
   this.body.graphics['west'] = reader.getNextInt16();
   this.body.headOffsetX = reader.getNextInt16();
   this.body.headOffsetY = reader.getNextInt16();
+  this.body.loadGraphics();
 
   return this.body;
 }

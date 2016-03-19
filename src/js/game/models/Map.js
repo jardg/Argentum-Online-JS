@@ -70,6 +70,20 @@ Map.prototype.getTilePosition = function(x, y) {
 };
 
 /**
+ * Loads all of this map tiles graphic models into tile instances
+ * @returns {Map}
+ */
+Map.prototype.loadTiles = function() {
+  var graphicStorage = this.game.ao.managers.loader.get('graphic')._storage;
+
+  _.each(this.tiles, function(tile, tileKey) {
+    tile.loadGraphics();
+  });
+
+  return this;
+};
+
+/**
  * Map.BufferLoader Class - Exports a buffer loader class
  * in use to load binary map data into memory
  * @param map
@@ -106,6 +120,7 @@ Map.BufferLoader.prototype.load = function(reader) {
       if((data & 16) == 16) tile.trigger = reader.getNextInt16();
 
       this.map.tiles[this.map.getTilePosition(x, y)] = tile;
+      this.map.tiles[this.map.getTilePosition(x, y)].loadGraphics();
     }
   }
 };
