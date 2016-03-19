@@ -61,7 +61,7 @@ BinaryBodyLoader.prototype.process = function(key, buffer) {
  * @param body
  */
 BinaryBodyLoader.prototype.onProcessed = function(body) {
-  this._storage.add(body.grh, body);
+  this._storage.add(body._id, body);
 };
 
 /**

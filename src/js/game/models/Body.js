@@ -11,6 +11,7 @@ var _ = require('lodash');
  * @constructor
  */
 var Body = function(id) {
+
   /**
    * Unique identifier of this model
    * @type {number}
@@ -21,8 +22,8 @@ var Body = function(id) {
    * Graphic index for each of the graphics stored in this model
    * @type {{north: number, west: number, south: number, east: number}}
    */
-  this.graphics =
-  { north: 0
+  this.graphics = {
+      north: 0
     , west: 0
     , south: 0
     , east: 0
@@ -47,6 +48,7 @@ var Body = function(id) {
    * @type {Body.BufferLoader}
    */
   this.loader = new Body.BufferLoader(this);
+
 };
 
 /**
@@ -55,6 +57,23 @@ var Body = function(id) {
  * @type {number}
  */
 Body.HEADER_SIZE = 263;
+
+/**
+ * Fills all of the graphics in this model with the graphic
+ * model stored in game's graphic storage
+ * @param game
+ * @returns {Body}
+ */
+Body.prototype.loadGraphics = function(game) {
+  var self = this;
+
+  _.each(this.graphics, function(graphic, key) {
+    self.graphics[key] = game.ao.storage.graphic.get(graphic);
+    game.ao.managers.texture.load(self.graphics[key].grh);
+  });
+
+  return this;
+};
 
 /**
  * Body Buffer Loader instance

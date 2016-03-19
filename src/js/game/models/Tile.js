@@ -2,7 +2,8 @@
  * Module imports
  * @type {*|exports|module.exports}
  */
-var Position = require('./Position.js');
+var Position = require('./Position.js')
+  , _ = require('lodash');
 
 /**
  * Tile class - Model for saving tile data
@@ -15,7 +16,7 @@ var Tile = function Tile() {
    * Array containing tile graphics data in each layer
    * @type {Array}
    */
-  this.graphics = [];
+  this.graphics = [0, 0, 0, 0];
 
   /**
    * Stores whether this tile is blocked or not

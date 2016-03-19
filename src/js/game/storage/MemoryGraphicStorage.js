@@ -3,8 +3,7 @@
  * @constructor
  */
 var MemoryGraphicStorage = function() {
-  this._graphics = {};
-  this.length = 0;
+  this._graphics = [];
 };
 
 /**
@@ -14,8 +13,7 @@ var MemoryGraphicStorage = function() {
  * @returns {MemoryGraphicStorage}
  */
 MemoryGraphicStorage.prototype.add = function(index, graphic) {
-  this._graphics[index] = graphic;
-  this.length++;
+  this._graphics.splice(index, 0, graphic);
   return this;
 };
 
@@ -35,7 +33,7 @@ MemoryGraphicStorage.prototype.get = function(index) {
  * @returns {*}
  */
 MemoryGraphicStorage.prototype.count = function() {
-  return this.length;
+  return this._graphics.length;
 };
 
 /**

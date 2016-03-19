@@ -3,8 +3,7 @@
  * @constructor
  */
 var MemoryHeadStorage = function() {
-  this._heads = {};
-  this.length = 0;
+  this._heads = [];
 };
 
 /**
@@ -14,9 +13,16 @@ var MemoryHeadStorage = function() {
  * @returns {MemoryHeadStorage}
  */
 MemoryHeadStorage.prototype.add = function(index, head) {
-  this._heads[index] = head;
-  this.length++;
+  this._heads.splice(index, 0, head);
   return this;
+};
+
+/**
+ * Returns all of the objects in the internal array
+ * @returns {Array}
+ */
+MemoryHeadStorage.prototype.all = function() {
+  return this._heads;
 };
 
 /**
@@ -35,7 +41,7 @@ MemoryHeadStorage.prototype.get = function(index) {
  * @returns {*}
  */
 MemoryHeadStorage.prototype.count = function() {
-  return this.length;
+  return this._heads.length;
 };
 
 /**

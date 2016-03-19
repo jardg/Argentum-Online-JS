@@ -22,8 +22,8 @@ var Helmet = function(id) {
    * Graphic index for each of the graphics stored in this model
    * @type {{north: number, west: number, south: number, east: number}}
    */
-  this.graphics =
-  {   north: 0
+  this.graphics = {
+      north: 0
     , east: 0
     , south: 0
     , west: 0
@@ -43,6 +43,23 @@ var Helmet = function(id) {
  * @type {number}
  */
 Helmet.HEADER_SIZE = 263;
+
+/**
+ * Fills all of the graphics in this model with the graphic
+ * model stored in game's graphic storage
+ * @param game
+ * @self = this;self {Helmet}
+ */
+Helmet.prototype.loadGraphics = function(game) {
+  var self = this;
+
+  _.each(this.graphics, function(graphic, key) {
+    self.graphics[key] = game.ao.storage.graphic.get(graphic);
+    game.ao.managers.texture.load(self.graphics[key].grh);
+  });
+
+  return this;
+};
 
 /**
  * Helmet Buffer Loader instance

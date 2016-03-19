@@ -3,14 +3,16 @@
  * @type {exports|module.exports}
  * @private
  */
-var _ = require('lodash');
+var _ = require('lodash')
+  , Phaser = require('Phaser');
 
 /**
  * Object constructor
  * @param id
  * @constructor
  */
-var Graphic = function(id) {
+var Graphic = function Graphic(id) {
+
   /**
    * Unique id of this model
    * @type {number}
@@ -21,7 +23,7 @@ var Graphic = function(id) {
    * Graphic index number
    * @type {number}
    */
-  this.grh = 0;
+  this.number = this.grh = 0;
 
   /**
    * File number to obtain the graphic
@@ -71,6 +73,7 @@ var Graphic = function(id) {
    * @type {number}
    */
   this.tileWidth = 0.0;
+
   /**
    * Tile height proportion between pixel height
    * and hardcoded game tile height
@@ -79,11 +82,18 @@ var Graphic = function(id) {
   this.tileHeight = 0.0;
 
   /**
+   * Placeholder for texture object
+   * @type {*|{}|PIXI.Texture}
+   */
+  this.texture = {};
+
+  /**
    * Internal abstracted graphic loader
    *      (using hardcoded buffer loader for binary loaders)
    * @type {Graphic.BufferLoader}
    */
   this.loader = new Graphic.BufferLoader(this);
+
 };
 
 /**

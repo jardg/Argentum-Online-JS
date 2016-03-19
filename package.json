@@ -25,6 +25,9 @@
     },
     "Stats": {
       "exports": "Stats"
+    },
+    "PIXI": {
+      "exports": "Pixi"
     }
   },
   "dependencies": {

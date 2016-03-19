@@ -11,7 +11,13 @@ var Tile = require('./Tile.js')
  * @param id
  * @constructor
  */
-var Map = function(id) {
+var Map = function(game, id) {
+
+  /**
+   * Saves current game instance reference into model
+   * @type {Phaser}
+   */
+  this.game = game;
 
   /**
    * Unique identifier for this map
@@ -36,7 +42,7 @@ var Map = function(id) {
    *
    * @type {Map.BufferLoader}
    */
-  this.loader = new Map.BufferLoader(this);
+  this.loader = new Map.BufferLoader(game, this);
 
 };
 
@@ -67,6 +73,25 @@ Map.prototype.HEADER_SIZE = 263 + (2 * 5);
  */
 Map.prototype.getTilePosition = function(x, y) {
   return (y * this.MAP_TILE_WIDTH) + x;
+};
+
+/**
+ * Fills all of the graphics in this model with the graphic
+ * model stored in game's graphic storage
+ * @param game
+ * @returns {Map}
+ */
+Map.prototype.loadGraphics = function(game) {
+  var self = this;
+
+  this.tiles.forEach(function(tile, key) {
+    _.each(tile.graphics, function(graphic, key) {
+      self.tiles[key].graphics[key] = game.ao.storage.graphic.get(graphic);
+      game.ao.managers.texture.load(self.graphics[key].graphics[key]);
+    });
+  });
+
+  return this;
 };
 
 /**

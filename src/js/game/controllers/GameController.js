@@ -12,13 +12,13 @@ var Controller = require('./Controller.js')
  */
 var GameController = function(game) {
   Controller.call(this, [game]);
-  var config = maps = require('../config/maps.js');
+  var maps = require('../config/maps.js');
 
   /**
    * Instantiates a map manager driver into this controller
    * @type {MapManager}
    */
-  this.map = new config.driver(game);
+  this.map = new maps.driver(game);
 };
 
 /**

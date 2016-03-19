@@ -2,8 +2,7 @@
  * Module dependencies
  * @type {*}
  */
-var LoaderManager = require('../managers/LoaderManager.js')
-  , Controller = require('./Controller.js')
+var Controller = require('./Controller.js')
   , _ = require('lodash');
 
 /**
@@ -27,11 +26,9 @@ PreloadController.prototype = _.create(Controller.prototype, {
  * @returns {*}
  */
 PreloadController.prototype.preload = function() {
-  var loader = new LoaderManager(this.game);
-
   this.game.load.image('logo', 'images/phaser.png#grunt-cache-bust');
 
-  return loader.start();
+  return this.game.ao.managers.loader.start();
 };
 
 /**
@@ -39,7 +36,26 @@ PreloadController.prototype.preload = function() {
  * @returns {*}
  */
 PreloadController.prototype.create = function() {
+  this.loadModels();
   this.game.state.start('game');
+};
+
+/**
+ * References each loaded graphic number on the models to it's
+ * relative GraphicStorage {Graphic} model (logic is abstracted
+ * in each model)
+ * @returns {*}
+ */
+PreloadController.prototype.loadModels = function() {
+  var self = this;
+
+  _.each(this.game.ao.storage, function(storage, key) {
+    if(key === 'graphic' || key === 'texture' || key === 'map') return;
+
+    _.each(storage.all(), function(model, key) {
+      model.loadGraphics(self.game);
+    });
+  });
 };
 
 /**
