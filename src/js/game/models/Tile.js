@@ -57,22 +57,6 @@ var Tile = function Tile() {
 }
 
 /**
- * Loads each one of this tile graphics into memory using a graphic storage
- * @param graphicStorage
- * @returns {Tile}
- */
-Tile.prototype.loadGraphics = function(graphicStorage, textureManager) {
-  _.each(this.graphics, function(graphic, key) {
-    var graphic = graphicStorage.get(graphic);
-    var texture = textureManager.load(graphic.number);
-
-    this.graphics[key] = graphic;
-  });
-
-  return this;
-};
-
-/**
  * Exports this model constructor
  * @type {Function}
  */

@@ -81,13 +81,7 @@ Map.prototype.getTilePosition = function(x, y) {
  * @param map
  * @constructor
  */
-Map.BufferLoader = function(game, map) {
-
-  /**
-   * Stores game instance reference
-   * @type {Phaser}
-   */
-  this.game = game;
+Map.BufferLoader = function(map) {
 
   /**
    * Internally save the map instance for edition
@@ -116,7 +110,6 @@ Map.BufferLoader.prototype.load = function(reader) {
       if((data & 4) == 4) tile.graphics[2] = reader.getNextInt16();
       if((data & 8) == 8) tile.graphics[3] = reader.getNextInt16();
       if((data & 16) == 16) tile.trigger = reader.getNextInt16();
-      tile.loadGraphics(this.game.ao.storage.graphic, this.game.ao.managers.texture);
 
       this.map.tiles[this.map.getTilePosition(x, y)] = tile;
     }

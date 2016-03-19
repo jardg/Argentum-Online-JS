@@ -52,19 +52,6 @@ var Body = function(id) {
 };
 
 /**
- * Loads each one of this body's graphics into memory using a graphic storage
- * @param graphicStorage
- */
-Body.prototype.loadGraphics = function(graphicStorage, textureManager) {
-  _.each(this.graphics, function(graphic, key) {
-    var graphic = graphicStorage.get(graphic);
-    var texture = textureManager.load(graphic.grh);
-
-    this.graphics[key] = graphic;
-  });
-};
-
-/**
  * Declares the header file size for binary files
  * @const
  * @type {number}

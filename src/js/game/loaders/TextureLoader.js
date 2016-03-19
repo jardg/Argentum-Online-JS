@@ -4,6 +4,7 @@
  */
 var config = require('../config/textures.js')
   , EventManager = require('../managers/EventManager.js')
+  , Phaser = require('Phaser')
   , _ = require('lodash');
 
 /**
@@ -35,15 +36,34 @@ TextureLoader.prototype.getImagePath = function(image) {
 };
 
 /**
- * Performs the load of this texture image file
- * @param key
+ * Performs the load of a single texture image file
+ * @param {Graphic} graphic - Graphic to load texture into memory
+ * @param {function} onLoaded(graphic, texture)
  * @returns {*|Phaser.Loader|{}}
  */
-TextureLoader.prototype.load = function(key) {
-  var grh = this.game.ao.managers.loader.get('graphic')._storage.get(key)
-    , path = this.getImagePath(grh.fileNumber);
+TextureLoader.prototype.load = function(graphic, onLoaded) {
+  if(! graphic.fileNumber) return null;
 
-  return grh.textureLoader.load(key, path, this._storage);
+  // Recursively load all framed animation textures
+  if(graphic.frames.length > 0) {
+    var self = this;
+    _.each(graphic.frames, function(frame) {
+      var graphic = self.game.ao.managers.graphic.get(frame);
+      self.load(graphic, onLoaded);
+    });
+
+    return null;
+  }
+
+  var path = this.getImagePath(graphic.fileNumber);
+  var texture = new PIXI.Texture.fromImage(path, false, PIXI.scaleModes.NEAREST);
+  texture.setFrame(new PIXI.Rectangle(
+    graphic.sourceX, graphic.sourceY,
+    graphic.pixelWidth, graphic.pixelHeight
+  ));
+  graphic.texture = texture;
+
+  return onLoaded(graphic, texture);
 };
 
 /**

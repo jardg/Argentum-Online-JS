@@ -62,6 +62,7 @@ BinaryGraphicLoader.prototype.process = function(key, buffer) {
  */
 BinaryGraphicLoader.prototype.onProcessed = function(graphic) {
   this._storage.add(graphic.grh, graphic);
+  this.game.ao.managers.texture.load(graphic);
 };
 
 /**

@@ -17,21 +17,19 @@
     , LoaderManager = require('./managers/LoaderManager.js')
     , TextureManager = require('./managers/TextureManager.js');
 
+  Phaser.Game.prototype.ao = {
+    managers: {}
+    , storage: {}
+    , loaders: {}
+  };
+
   /**
    * Start our game instance
    * @type {Phaser.Game}
    */
   var game = new Phaser.Game(properties.size.x, properties.size.y, Phaser.AUTO, 'game');
-
-  Phaser.Game.prototype.ao = {};
-  game.ao = {
-      managers: {
-          texture: new TextureManager(game)
-        , loader: new LoaderManager(game)
-      }
-      , storage: {}
-      , loaders: {}
-    };
+  game.ao.managers.texture = new TextureManager(game);
+  game.ao.managers.loader = new LoaderManager(game);
 
   /**
    * Instantiate the StateManager and le the magic begin!

@@ -82,18 +82,18 @@ var Graphic = function(id) {
   this.tileHeight = 0.0;
 
   /**
+   * Placeholder for texture object
+   * @type {{}}
+   */
+  this.texture = {};
+
+  /**
    * Internal abstracted graphic loader
    *      (using hardcoded buffer loader for binary loaders)
    * @type {Graphic.BufferLoader}
    */
   this.loader = new Graphic.BufferLoader(this);
 
-  /**
-   * Internal Graphical Texture loader, loads all of this graphic textures
-   * into memory storage and into this model instance
-   * @type {Graphic.TextureLoader}
-   */
-  this.textureLoader = new Graphic.TextureLoader(this);
 };
 
 /**
@@ -107,45 +107,6 @@ Graphic.TILE_WIDTH = 32;
  * @type {number}
  */
 Graphic.TILE_HEIGHT = 32;
-
-/**
- * Graphic.TextureLoader class - Internal texture loader for graphics
- * @param graphic
- * @constructor
- */
-Graphic.TextureLoader = function(graphic) {
-  this.graphic = graphic;
-}
-
-/**
- * Loads a texture using a path, key and storage
- * @param key
- * @param path
- * @param storage
- */
-Graphic.TextureLoader.prototype.load = function(key, path, storage) {
-  var texture = new PIXI.Texture.fromImage(this.getImagePath(key), false, PIXI.scaleModes.NEAREST)
-    , self = this;
-
-  // Recursively load all frame animation textures
-  if(this.frames.length > 0) {
-    _.each(this.frames, function(frame) {
-      console.log(frame);
-      self.textureLoader.load(frame, path, storage);
-    });
-
-    return this.graphic;
-  }
-
-  texture.setFrame(new PIXI.Rectangle(
-    this.graphic.sourceX, this.graphic.sourceY,
-    this.graphic.pixelWidth, this.graphic.pixelHeight
-  ));
-  this.graphic.texture = texture;
-  storage.add(key, texture);
-
-  return this.graphic;
-};
 
 /**
  * Graphic Buffer Loader instance

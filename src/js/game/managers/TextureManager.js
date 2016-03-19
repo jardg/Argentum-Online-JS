@@ -21,18 +21,18 @@ var TextureManager = function(game) {
   this.game = game;
 
   /**
+   * Instantiates this manager storage and sets the hardcoded
+   * key inside ao object public storage structure
+   * @type {*}
+   */
+  this.storage = new config.storage();
+  this.game.ao.storage.texture = this.storage;
+
+  /**
    * Instantiates texture loader into this manager
    * @type {TextureLoader}
    */
-  this.loader = new config.loader(game, new config.storage());
-
-  /**
-   * Save this texture manager instance into our game's internal
-   * texture manager
-   * @type {{}|*|Array}
-   */
-  this.game.ao.managers = this.game.ao.managers || {};
-  this.game.ao.managers.texture = this;
+  this.loader = new config.loader(game, this.storage);
 
 };
 
@@ -41,16 +41,22 @@ var TextureManager = function(game) {
  * @param grh - Key of the texture to load
  * @returns {TextureManager}
  */
-TextureManager.prototype.load = function(grh) {
+TextureManager.prototype.load = function(graphic) {
   try {
-    if(this.game.ao.storage.texture.has(grh)) {
+    if(this.storage.has(graphic.grh)) {
       console.info('[managers/TextureManager.js]: Returning texture already in storage cache.');
-      return this.game.ao.storage.texture.get(grh);
+      return this.storage.get(graphic.grh);
     }
 
-    return this.loader.load(grh);
+    var self = this;
+    this.loader.load(graphic, function(graphic, texture) {
+      self.storage.add(graphic.grh, texture);
+
+      // Uncomment console log if you want overhead hell
+      //console.log(graphic, texture);
+    });
   } catch(err) {
-    console.error('[managers/TextureManager.js]: Texture with key [' + grh + '] failed to load: ' + err.message);
+    console.error('[managers/TextureManager.js]: Texture with key [' + graphic.grh + '] failed to load: ' + err.message);
   }
 };
 
