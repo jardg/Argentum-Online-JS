@@ -12,12 +12,13 @@ var Controller = require('./Controller.js')
  */
 var GameController = function(game) {
   Controller.call(this, [game]);
+  var config = maps = require('../config/maps.js');
 
   /**
    * Instantiates a map manager driver into this controller
    * @type {MapManager}
    */
-  this.map = new maps.driver();
+  this.map = new config.driver(game);
 };
 
 /**
@@ -29,14 +30,20 @@ GameController.prototype = _.create(Controller.prototype, {
 });
 
 /**
+ * Preloads this Game Controller, for test purposes just loads a map
+ * @returns {*}
+ */
+GameController.prototype.preload = function() {
+  this.map.load(1);
+}
+
+/**
  * Just show a PhaserJS logo indicating that everything went smoothly
  * @returns {*}
  */
 GameController.prototype.create = function() {
   var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
   logo.anchor.setTo(0.5, 0.5);
-
-  this.map.load(1);
 };
 
 /**

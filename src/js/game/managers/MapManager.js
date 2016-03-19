@@ -12,6 +12,9 @@ var config = require('../config/maps.js')
  */
 var MapManager = function(game) {
 
+  // Not sure why it doesn't work up there
+  var config = require('../config/maps.js');
+
   /**
    * Stores PhaserJS Game Instance
    * @type Phaser
@@ -42,7 +45,7 @@ MapManager.prototype.load = function(map, cb) {
   try {
     this.loader.addListener('onLoaded', cb);
     this.loader.load(map, function(map) {
-      console.info('[managers/MapManager.js]: Successfully loaded map with ID [' + map + ']');
+      console.info('[managers/MapManager.js]: Successfully loaded map with ID [' + map.number + ']');
     });
   } catch(err) {
     console.error('[managers/MapManager.js]: Map with ID [' + map + '] failed to load: ' + err.message);

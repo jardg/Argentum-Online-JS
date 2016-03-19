@@ -38,6 +38,6 @@ module.exports = {
    * Format for map file names
    * @type {string}
    */
-  format: 'Mapa{number}.dat'
+  format: 'Mapa{number}.map'
 
 }

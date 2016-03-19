@@ -17,9 +17,11 @@ var config = require('../config/maps.js')
  * @constructor
  */
 var BinaryMapLoader = function BinaryMapLoader(game, storage, path) {
+  var config = require('../config/maps.js');
   this.game = game;
   this._path = path || config.path;
   this._storage = storage;
+  this.config = config;
   EventManager.eventify(this);
 };
 
@@ -31,7 +33,7 @@ var BinaryMapLoader = function BinaryMapLoader(game, storage, path) {
  * @returns {string}
  */
 BinaryMapLoader.prototype.getMapPath = function(mapId) {
-  return this._path + config.format.replace(/\{number}/, mapId.toString());
+  return this._path + this.config.format.replace(/\{number}/, mapId.toString());
 };
 
 /**
@@ -55,7 +57,7 @@ BinaryMapLoader.prototype.load = function(map, onLoaded) {
 BinaryMapLoader.prototype.process = function(key, buffer) {
   var reader = new BufferAdapter(buffer, true);
 
-  var map = new config.model(key);
+  var map = new this.config.model(key);
   map.loader.load(reader);
 
   this.fire('onLoaded', [map], this);
