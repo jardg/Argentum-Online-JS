@@ -36,6 +36,17 @@ PreloadController.prototype.preload = function() {
  * @returns {*}
  */
 PreloadController.prototype.create = function() {
+  this.loadModels();
+  this.game.state.start('game');
+};
+
+/**
+ * References each loaded graphic number on the models to it's
+ * relative GraphicStorage {Graphic} model (logic is abstracted
+ * in each model)
+ * @returns {*}
+ */
+PreloadController.prototype.loadModels = function() {
   var self = this;
 
   _.each(this.game.ao.storage, function(storage, key) {
@@ -43,11 +54,8 @@ PreloadController.prototype.create = function() {
 
     _.each(storage.all(), function(model, key) {
       model.loadGraphics(self.game);
-      console.log(model);
     });
   });
-
-  this.game.state.start('game');
 };
 
 /**

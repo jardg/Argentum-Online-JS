@@ -13,7 +13,7 @@ var MemoryWeaponStorage = function() {
  * @returns {MemoryWeaponStorage}
  */
 MemoryWeaponStorage.prototype.add = function(index, weapon) {
-  this._weapons[index] = weapon;
+  this._weapons.splice(index, 0, weapon);
   return this;
 };
 

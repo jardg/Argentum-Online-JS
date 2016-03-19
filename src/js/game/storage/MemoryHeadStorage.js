@@ -13,7 +13,7 @@ var MemoryHeadStorage = function() {
  * @returns {MemoryHeadStorage}
  */
 MemoryHeadStorage.prototype.add = function(index, head) {
-  this._heads[index] = head;
+  this._heads.splice(index, 0, head);
   return this;
 };
 
@@ -41,7 +41,7 @@ MemoryHeadStorage.prototype.get = function(index) {
  * @returns {*}
  */
 MemoryHeadStorage.prototype.count = function() {
-  return this.length;
+  return this._heads.length;
 };
 
 /**

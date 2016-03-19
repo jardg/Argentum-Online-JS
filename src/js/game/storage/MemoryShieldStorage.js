@@ -13,7 +13,7 @@ var MemoryShieldStorage = function() {
  * @returns {MemoryShieldStorage}
  */
 MemoryShieldStorage.prototype.add = function(index, shield) {
-  this._shields[index] = shield;
+  this._shields.splice(index, 0, shield);
   return this;
 };
 

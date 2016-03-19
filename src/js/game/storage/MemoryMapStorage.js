@@ -13,7 +13,7 @@ var MemoryMapStorage = function() {
  * @returns {MemoryMapStorage}
  */
 MemoryMapStorage.prototype.add = function(index, map) {
-  this._maps[index] = map;
+  this._maps.splice(index, 0, map);
   return this;
 };
 

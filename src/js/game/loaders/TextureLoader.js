@@ -47,8 +47,9 @@ TextureLoader.prototype.load = function(graphic, onLoaded) {
   // Recursively load all framed animation textures
   if(graphic.frames.length > 0) {
     var self = this;
-    _.each(graphic.frames, function(frame) {
+    _.each(graphic.frames, function(frame, key) {
       var graphic = self.game.ao.managers.graphic.get(frame);
+      graphic.frames[key] = graphic;
       self.load(graphic, onLoaded);
     });
 

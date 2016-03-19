@@ -13,7 +13,7 @@ var MemoryHelmetStorage = function() {
  * @returns {MemoryHelmetStorage}
  */
 MemoryHelmetStorage.prototype.add = function(index, helmet) {
-  this._helmets[index] = helmet;
+  this._helmets.splice(index, 0, helmet);
   return this;
 };
 

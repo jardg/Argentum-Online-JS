@@ -54,9 +54,9 @@ LoaderManager.prototype.start = function() {
 LoaderManager.prototype.load = function(loader, key) {
   var storage = this.game.ao.addStorage(key, loader.storage)
     , loader = this.game.ao.addLoader(key, loader.driver, storage, loader.path);
-  this._loaders[key] = loader;
 
   try {
+    this._loaders[key] = loader;
     loader.load(null, function(storage) {
       console.info('[managers/LoaderManager.js]: Successfully loaded ' + storage.count() +
                    ' objects from loader with key [' + key + ']');

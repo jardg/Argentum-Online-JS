@@ -20,7 +20,7 @@ var MemoryTextureStorage = function() {
  * @returns {MemoryTextureStorage}
  */
 MemoryTextureStorage.prototype.add = function(index, texture) {
-  this._textures[index] = texture;
+  this._textures.splice(index, 0, texture);
   return this;
 };
 
