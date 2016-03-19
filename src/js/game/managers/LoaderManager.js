@@ -25,6 +25,13 @@ var LoaderManager = function(game) {
    */
   this._loaders = loaders;
 
+  /**
+   * Save current instance in game singleton
+   * @type {{loaderManager: LoaderManager}|*}
+   */
+  this.game.ao = this.game.ao || {};
+  this.game.ao.loaderManager = this;
+
 };
 
 /**
@@ -54,6 +61,7 @@ LoaderManager.prototype.start = function() {
 LoaderManager.prototype.load = function(loader, key) {
   var storage = new loader.storage()
     , loader = new loader.driver(this.game, storage, loader.path);
+  this._loaders[key] = loader;
 
   try {
     loader.load(null, function(storage) {
@@ -67,6 +75,15 @@ LoaderManager.prototype.load = function(loader, key) {
 
   return this;
 };
+
+/**
+ * Obtains a loader driver from internal structure
+ * @param key
+ * @returns {*}
+ */
+LoaderManager.prototype.get = function(key) {
+  return this._loaders[key];
+}
 
 /**
  * Export this module definition

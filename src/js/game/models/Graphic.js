@@ -3,7 +3,8 @@
  * @type {exports|module.exports}
  * @private
  */
-var _ = require('lodash');
+var _ = require('lodash')
+  , Phaser = require('Phaser');
 
 /**
  * Object constructor
@@ -84,6 +85,13 @@ var Graphic = function(id) {
    * @type {Graphic.BufferLoader}
    */
   this.loader = new Graphic.BufferLoader(this);
+
+  /**
+   * Internal Graphical Texture loader, loads all of this graphic textures
+   * into memory storage and into this model instance
+   * @type {Graphic.TextureLoader}
+   */
+  this.textureLoader = new Graphic.TextureLoader(this);
 };
 
 /**
@@ -97,6 +105,29 @@ Graphic.TILE_WIDTH = 32;
  * @type {number}
  */
 Graphic.TILE_HEIGHT = 32;
+
+Graphic.TextureLoader = function(graphic) {
+  this.graphic = graphic;
+}
+
+/**
+ * Loads a texture using a path, key and storage
+ * @param key
+ * @param path
+ * @param storage
+ */
+Graphic.TextureLoader.prototype.load = function(key, path, storage) {
+  var texture = new PIXI.Texture.fromImage(this.getImagePath(key), false, PIXI.scaleModes.NEAREST);
+
+  texture.setFrame(new PIXI.Rectangle(
+    this.graphic.sourceX, this.graphic.sourceY,
+    this.graphic.pixelWidth, this.graphic.pixelHeight
+  ));
+  this._storage.add(key, texture);
+  this.graphic.texture = texture;
+
+  return this.graphic.texture;
+};
 
 /**
  * Graphic Buffer Loader instance
