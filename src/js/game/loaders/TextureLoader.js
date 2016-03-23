@@ -64,6 +64,7 @@ TextureLoader.prototype.load = function(graphic, onLoaded) {
   ));
   graphic.texture = texture;
 
+  PIXI.Texture.addTextureToCache(texture, graphic.grh);
   return onLoaded(graphic, texture);
 };
 

@@ -100,13 +100,13 @@ var Graphic = function Graphic(id) {
  * Tile Width in pixels
  * @type {number}
  */
-Graphic.TILE_WIDTH = 32;
+Graphic.prototype.TILE_WIDTH = 32;
 
 /**
  * Tile Height in pixels
  * @type {number}
  */
-Graphic.TILE_HEIGHT = 32;
+Graphic.prototype.TILE_HEIGHT = 32;
 
 /**
  * Graphic Buffer Loader instance
@@ -131,7 +131,6 @@ Graphic.BufferLoader.prototype.load = function(reader) {
     for(var i in _.range(0, frames)) {
       this.graphic.frames.push(reader.getNextInt32());
     }
-    //this.graphic.speed = reader.getNextFloat32();
     reader.skipBytes(4);
     this.graphic.speed = (frames * 1000) / 60;
     return this.graphic;

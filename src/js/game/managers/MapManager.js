@@ -53,7 +53,6 @@ MapManager.prototype.load = function(map, cb) {
     this.loader.addListener('onLoaded', cb);
     this.loader.load(map, function(map) {
       console.info('[managers/MapManager.js]: Successfully loaded map with ID [' + map.number + ']');
-      map.loadGraphics(this.game);
     });
   } catch(err) {
     console.error('[managers/MapManager.js]: Map with ID [' + map + '] failed to load: ' + err.message);

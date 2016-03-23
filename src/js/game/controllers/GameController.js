@@ -3,8 +3,9 @@
 * @type {*}
 */
 var Controller = require('./Controller.js')
-    , maps = require('../config/maps.js')
-    , _ = require('lodash');
+  , MapRenderer = require('../renderers/MapRenderer')
+  , maps = require('../config/maps.js')
+  , _ = require('lodash');
 
 /**
  * GameController class - Extends abstract controller
@@ -19,6 +20,19 @@ var GameController = function(game) {
    * @type {MapManager}
    */
   this.map = new maps.driver(game);
+
+  /**
+   * Saves MapRenderer instance
+   * @type {MapRenderer}
+   */
+  this.mapRenderer = new MapRenderer(game);
+
+  /**
+   * Saves the current map into this controller
+   * @type {*|Map}
+   */
+  this.currentMap = {};
+
 };
 
 /**
@@ -34,7 +48,11 @@ GameController.prototype = _.create(Controller.prototype, {
  * @returns {*}
  */
 GameController.prototype.preload = function() {
-  this.map.load(1);
+  var self = this;
+
+  this.map.load(1, function(map) {
+    self.currentMap = map;
+  });
 }
 
 /**
@@ -44,6 +62,8 @@ GameController.prototype.preload = function() {
 GameController.prototype.create = function() {
   var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
   logo.anchor.setTo(0.5, 0.5);
+
+  this.mapRenderer.start(this.currentMap);
 };
 
 /**
