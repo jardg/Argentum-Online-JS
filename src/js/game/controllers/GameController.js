@@ -12,13 +12,6 @@ var Controller = require('./Controller.js')
  */
 var GameController = function(game) {
   Controller.call(this, [game]);
-  var maps = require('../config/maps.js');
-
-  /**
-   * Instantiates a map manager driver into this controller
-   * @type {MapManager}
-   */
-  this.map = new maps.driver(game);
 
   /**
    * Saves MapRenderer instance
@@ -49,7 +42,7 @@ GameController.prototype = _.create(Controller.prototype, {
 GameController.prototype.preload = function() {
   var self = this;
 
-  this.map.load(1, function(map) {
+  this.game.ao.managers.map.load(1, function(map) {
     self.currentMap = map;
   });
 }
@@ -62,6 +55,7 @@ GameController.prototype.create = function() {
   var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
   logo.anchor.setTo(0.5, 0.5);
 
+  console.log(this.currentMap);
   this.mapRenderer.start(this.currentMap);
 };
 

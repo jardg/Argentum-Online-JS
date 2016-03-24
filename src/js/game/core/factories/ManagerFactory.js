@@ -1,8 +1,14 @@
 /**
  * Module dependencies
- * @type {Argentum}
+ * @type {ArgentumClient}
  */
-var Argentum = require('../Argentum');
+var ArgentumClient = require('../ArgentumClient')
+  , fs = require('fs');
+
+// Hack to compile Glob files. Don´t call this function!
+function ಠ_ಠ() {
+  require('../../managers/**/*.js', { glob: true })
+}
 
 /**
  * Obtains or instantiates all managers found in a directory {path}
@@ -14,7 +20,7 @@ var ManagerFactory = function ManagerFactory(ao, path) {
 
   /**
    * Saves an instance of our main game object
-   * @type {Argentum}
+   * @type {ArgentumClient}
    */
   this.ao = ao;
 
@@ -23,6 +29,18 @@ var ManagerFactory = function ManagerFactory(ao, path) {
    * @type {string}
    */
   this.path = path || this.ao.getManagersPath();
+
+  /**
+   * Initialize managers structure inside ArgentumClient
+   * @type {{}|*}
+   */
+  this.ao.managers = this.ao.managers || {};
+
+  /**
+   * Initialize storage structure inside ArgentumClietn
+   * @type {*|Function|{}|MemoryMapStorage}
+   */
+  this.ao.storage = this.ao.storage || {};
 
 };
 
@@ -42,37 +60,32 @@ String.prototype.capitalize = function() {
  * @returns {*}
  */
 ManagerFactory.prototype.add = function(file, key) {
-  var file = this.path + '/' + file;
+  var file = this.path + file
+    , driver = require(file);
 
-  return this.game.ao.add.manager(key.toLowerCase(), require(file));
+  return this.ao.add.manager(key, driver);
 };
 
 /**
- * Reads a given path for files and adds them to Argentum
+ * Reads a given path for files and adds them to ArgentumClient
  * managers structure
  * @param [path=this.path]
  * @returns {{}}
  */
 ManagerFactory.prototype.load = function(path) {
-  var path = path || this.path
-    , managers = fs.readdirSync(path)
+  var managers = fs.readdirSync(__dirname + '/../../managers/')
     , self = this;
 
   managers.forEach(function(file) {
-    var key = file.slice(0, -10);
-    console.log(key);
-
-    if(key === 'Manager.js') {
-      self.add(file, key);
-    }
+    var key = file.slice(0, -10).toLowerCase();
+    self.add(file, key);
   });
 
-  return this.game.ao.managers;
+  return this.ao.managers;
 }
 
 /**
  * Exports this module constructor
  * @type {Function}
  */
-Argentum.ManagerFactory = ManagerFactory;
 module.exports = ManagerFactory;

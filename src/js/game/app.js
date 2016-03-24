@@ -11,13 +11,13 @@
    * Declare needed game dependencies
    * @type {*}
    */
-  var Argentum = require('./core/Argentum')
+  var ArgentumClient = require('./core/ArgentumClient')
     , properties = require('./properties');
 
   /**
    * Start our game instance
-   * @type {Argentum}
+   * @type {ArgentumClient}
    */
-  var ao = new Argentum(properties);
+  var ao = new ArgentumClient(properties);
 
 })();

@@ -1,9 +1,10 @@
-/**
- * Module dependencies
- * @type {Argentum|fs|exports|module.exports}
- */
-var Argentum = require('../Argentum')
+var ArgentumClient = require('../ArgentumClient')
   , fs = require('fs');
+
+// Hack to compile Glob files. Don´t call this function!
+function ಠ_ಠ() {
+  require('../../config/**/*.js', { glob: true })
+}
 
 /**
  * ConfigFactory class - Defines this game's configuration manager
@@ -15,7 +16,7 @@ var ConfigFactory = function ConfigFactory(ao, path) {
 
   /**
    * Save internal reference to AO Object
-   * @type {Argentum}
+   * @type {ArgentumClient}
    */
   this.ao = ao;
 
@@ -30,7 +31,7 @@ var ConfigFactory = function ConfigFactory(ao, path) {
    * Path in where configuration files are stored
    * @type {*|string}
    */
-  this.path = path || '../config/';
+  this.path = path || this.ao.getConfigPath();
 
 };
 
@@ -44,12 +45,13 @@ var ConfigFactory = function ConfigFactory(ao, path) {
  * @returns {ConfigFactory}
  */
 ConfigFactory.prototype.load = function(config, path) {
-  var files = fs.readdirSync(path || this.path)
+  var path = path || this.path
+    , files = fs.readdirSync(__dirname + '/../../config/')
     , self = this;
 
-  files.forEach(function(fileName) {
-    console.log(fileName);
-    self.add(fileName, path || this.path);
+  files.forEach(function(file) {
+    var key = file.slice(0, -3);
+    self.add(key);
   });
 
   return this;
@@ -75,16 +77,18 @@ ConfigFactory.prototype.get = function(config) {
  *
  * @todo This method MUST merge configurations files whenever they are found inside our internal configurations structure
  *
- * @param config
+ * @param {string} key
+ * @param {string} [path]
  * @returns {*}
  */
-ConfigFactory.prototype.add = function(config, path) {
-  return this.ao.configs[config] = require((path || this.path) + config);
+ConfigFactory.prototype.add = function(key, path) {
+  var config = require('../../config/' + key + '.js');
+
+  return this.ao.configs[key] = config;
 };
 
 /**
- * Saves this module constructor into Argentum object and exports it
+ * Saves this module constructor into ArgentumClient object and exports it
  * @type {Function}
  */
-Argentum.ConfigFactory = ConfigFactory;
 module.exports = ConfigFactory;

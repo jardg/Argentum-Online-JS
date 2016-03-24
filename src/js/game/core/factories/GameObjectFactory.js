@@ -1,16 +1,15 @@
-var Argentum = require('../Argentum')
-  , ManagerFactory = require('./ManagerFactory');
+var ArgentumClient = require('../ArgentumClient');
 
 /**
  * GameObjectFactory class - Instantiates all AO game objects
  * @param ao
  * @constructor
  */
-var GameObjectFactory = function(ao) {
+var GameObjectFactory = function GameObjectFactory(ao) {
 
   /**
    * Reference to AOJS Engine
-   * @type {Argentum}
+   * @type {ArgentumClient}
    */
   this.ao = ao;
 
@@ -63,12 +62,6 @@ GameObjectFactory.prototype = {
   }
 
 }
-
-/**
- * Save this module's constructor into Argentum game instance
- * @type {GameObjectFactory}
- */
-Argentum.GameObjectFactory = GameObjectFactory;
 
 /**
  * Exports this module constructor

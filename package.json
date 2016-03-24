@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git@github.com:rtroncoso/argentum-online-js.git"
   },
-  "author": "Luke Wilde",
+  "author": "Rodrigo Troncoso",
   "license": "MIT",
   "browser": {
     "Phaser": "./src/js/lib/phaser.min.js",
@@ -28,10 +28,13 @@
     },
     "PIXI": {
       "exports": "Pixi"
-    },
-    "fs": {
-      "exports": "browserify-fs"
     }
+  },
+  "browserify": {
+    "transform": [
+      "brfs",
+      "require-globify"
+    ]
   },
   "dependencies": {
     "brfs": "^1.4.3",
@@ -53,6 +56,7 @@
     "grunt-open": "*",
     "grunt-pngmin": "^1.0.2",
     "ini": "^1.3.4",
-    "lodash": "*"
+    "lodash": "*",
+    "require-globify": "^1.3.0"
   }
 }
