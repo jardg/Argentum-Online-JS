@@ -2,8 +2,7 @@
  * Node module dependencies
  * @type {*|exports|module.exports}
  */
-var config = require('../config/textures.js')
-  , _ = require('lodash');
+var _ = require('lodash');
 
 /**
  * TextureManager class - Loads all assets from a configuration file
@@ -12,8 +11,6 @@ var config = require('../config/textures.js')
  */
 var TextureManager = function(game) {
 
-  var config = require('../config/textures.js')
-
   /**
    * Stores PhaserJS Game Instance
    * @type Phaser
@@ -21,17 +18,23 @@ var TextureManager = function(game) {
   this.game = game;
 
   /**
+   * Saves texture config in this instance
+   * @type {{}}
+   */
+  this.config = this.game.ao.config.get('texture');
+
+  /**
    * Instantiates this manager storage and sets the hardcoded
    * key inside ao object public storage structure
    * @type {*}
    */
-  this.storage = this.game.ao.addStorage('texture', config.storage);
+  this.storage = this.game.ao.add.storage('texture', this.config.storage);
 
   /**
    * Instantiates texture loader into this manager
    * @type {TextureLoader}
    */
-  this.loader = this.game.ao.addLoader('texture', config.loader, this.storage);
+  this.loader = this.game.ao.add.loader('texture', this.config.loader, this.storage);
 
 };
 

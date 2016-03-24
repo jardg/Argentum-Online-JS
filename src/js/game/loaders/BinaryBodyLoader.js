@@ -1,9 +1,8 @@
 /**
  * Module dependencies
- * @type {configuration|exports|module.exports}
+ * @type {EventManager|*|exports|module.exports}
  */
-var loaders = require('../config/loaders.js')
-  , EventManager = require('../managers/EventManager.js')
+var EventManager = require('../managers/EventManager.js')
   , BufferAdapter = require('../adapters/BufferAdapter.js')
   , Body = require('../models/Body.js')
   , _ = require('lodash');
@@ -17,8 +16,9 @@ var loaders = require('../config/loaders.js')
  */
 var BinaryBodyLoader = function BinaryBodyLoader(game, storage, path) {
   this.game = game;
-  this._path = path || loaders.body.path;
-  this._storage = storage;
+  this.config = this.game.ao.config.get('loaders');
+  this._path = path || this.config.body.path;
+  this._storage = storage || new this.config.body.storage();
   EventManager.eventify(this);
 };
 

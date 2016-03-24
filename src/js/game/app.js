@@ -11,13 +11,13 @@
    * Declare needed game dependencies
    * @type {*}
    */
-  var AOJS = require('./AOJS')
+  var ArgentumClient = require('./core/ArgentumClient')
     , properties = require('./properties');
 
   /**
    * Start our game instance
-   * @type {Phaser.Game}
+   * @type {ArgentumClient}
    */
-  var ao = new AOJS(properties);
+  var ao = new ArgentumClient(properties);
 
 })();

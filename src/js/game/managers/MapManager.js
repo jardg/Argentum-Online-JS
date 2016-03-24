@@ -2,8 +2,7 @@
  * Node module dependencies
  * @type {*|exports|module.exports}
  */
-var config = require('../config/maps.js')
-  , _ = require('lodash');
+var _ = require('lodash');
 
 /**
  * MapManager class - Loads all assets from a configuration file
@@ -12,9 +11,6 @@ var config = require('../config/maps.js')
  */
 var MapManager = function(game) {
 
-  // Not sure why it doesn't work up there
-  var config = require('../config/maps.js');
-
   /**
    * Stores PhaserJS Game Instance
    * @type Phaser
@@ -22,16 +18,22 @@ var MapManager = function(game) {
   this.game = game;
 
   /**
+   * Uses configuration file for maps
+   * @type {maps}
+   */
+  this.config = this.game.ao.config.get('maps');
+
+  /**
    * Instantiates storage for maps into this manager
    * @type {MemoryMapStorage}
    */
-  this.storage = this.game.ao.addStorage('map', config.storage);
+  this.storage = this.game.ao.add.storage('map', this.config.storage);
 
   /**
    * Instantiates loader for maps into this manager
    * @type {BinaryMapLoader}
    */
-  this.loader = this.game.ao.addLoader('map', config.loader, this.storage, config.path);
+  this.loader = this.game.ao.add.loader('map', this.config.loader, this.storage, this.config.path);
 
 };
 
@@ -53,7 +55,6 @@ MapManager.prototype.load = function(map, cb) {
     this.loader.addListener('onLoaded', cb);
     this.loader.load(map, function(map) {
       console.info('[managers/MapManager.js]: Successfully loaded map with ID [' + map.number + ']');
-      map.loadGraphics(this.game);
     });
   } catch(err) {
     console.error('[managers/MapManager.js]: Map with ID [' + map + '] failed to load: ' + err.message);

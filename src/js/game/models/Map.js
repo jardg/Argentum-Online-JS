@@ -76,31 +76,18 @@ Map.prototype.getTilePosition = function(x, y) {
 };
 
 /**
- * Fills all of the graphics in this model with the graphic
- * model stored in game's graphic storage
- * @param game
- * @returns {Map}
- */
-Map.prototype.loadGraphics = function(game) {
-  var self = this;
-
-  this.tiles.forEach(function(tile, key) {
-    _.each(tile.graphics, function(graphic, key) {
-      self.tiles[key].graphics[key] = game.ao.storage.graphic.get(graphic);
-      game.ao.managers.texture.load(self.graphics[key].graphics[key]);
-    });
-  });
-
-  return this;
-};
-
-/**
  * Map.BufferLoader Class - Exports a buffer loader class
  * in use to load binary map data into memory
  * @param map
  * @constructor
  */
-Map.BufferLoader = function(map) {
+Map.BufferLoader = function(game, map) {
+
+  /**
+   * Saves game instance into this BufferLoader object
+   * @type {Phaser.Game}
+   */
+  this.game = game;
 
   /**
    * Internally save the map instance for edition
@@ -115,7 +102,7 @@ Map.BufferLoader = function(map) {
  * BufferAdapter reader object
  * @param {BufferAdapter} reader
  */
-Map.BufferLoader.prototype.load = function(reader) {
+Map.BufferLoader.prototype.load = function(reader, game) {
   reader.skipBytes(this.map.HEADER_SIZE);
 
   for(var x = 0; x < this.map.MAP_TILE_WIDTH; x++) {
@@ -130,7 +117,8 @@ Map.BufferLoader.prototype.load = function(reader) {
       if((data & 8) == 8) tile.graphics[3] = reader.getNextInt16();
       if((data & 16) == 16) tile.trigger = reader.getNextInt16();
 
-      this.map.tiles[this.map.getTilePosition(x, y)] = tile;
+      tile.load(game);
+      this.map.tiles.splice(this.map.getTilePosition(x, y), 0, tile);
     }
   }
 };

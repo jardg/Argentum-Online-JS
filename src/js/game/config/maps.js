@@ -11,12 +11,6 @@ module.exports = {
   path: 'assets/maps/',
 
   /**
-   * Driver to use for Map Managing
-   * @type {}
-   */
-  driver: require('../managers/MapManager.js'),
-
-  /**
    * Driver used to retrieve and load single map file
    * @type {}
    */
