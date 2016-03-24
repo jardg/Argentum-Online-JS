@@ -25,13 +25,13 @@ var TextureManager = function(game) {
    * key inside ao object public storage structure
    * @type {*}
    */
-  this.storage = this.game.ao.addStorage('texture', config.storage);
+  this.storage = this.game.ao.add.storage('texture', config.storage);
 
   /**
    * Instantiates texture loader into this manager
    * @type {TextureLoader}
    */
-  this.loader = this.game.ao.addLoader('texture', config.loader, this.storage);
+  this.loader = this.game.ao.add.loader('texture', config.loader, this.storage);
 
 };
 

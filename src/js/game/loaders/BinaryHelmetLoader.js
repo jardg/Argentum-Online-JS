@@ -2,8 +2,7 @@
  * Module dependencies
  * @type {configuration|exports|module.exports}
  */
-var loaders = require('../config/loaders.js')
-  , EventManager = require('../managers/EventManager.js')
+var EventManager = require('../managers/EventManager.js')
   , BufferAdapter = require('../adapters/BufferAdapter.js')
   , Helmet = require('../models/Helmet.js')
   , _ = require('lodash');
@@ -17,7 +16,8 @@ var loaders = require('../config/loaders.js')
  */
 var BinaryHelmetLoader = function BinaryHelmetLoader(game, storage, path) {
   this.game = game;
-  this._path = path || loaders.helmet.path;
+  this.config = this.game.ao.config.get('loaders');
+  this._path = path || this.config.helmet.path;
   this._storage = storage;
   EventManager.eventify(this);
 };

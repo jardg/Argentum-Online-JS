@@ -4,7 +4,6 @@
 */
 var Controller = require('./Controller.js')
   , MapRenderer = require('../renderers/MapRenderer')
-  , maps = require('../config/maps.js')
   , _ = require('lodash');
 
 /**

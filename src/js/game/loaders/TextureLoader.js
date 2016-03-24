@@ -1,9 +1,8 @@
 /**
  * Module dependencies
- * @type {configuration|exports|module.exports}
+ * @type {*|exports|module.exports}
  */
-var config = require('../config/textures.js')
-  , EventManager = require('../managers/EventManager.js')
+var EventManager = require('../managers/EventManager.js')
   , Phaser = require('Phaser')
   , _ = require('lodash');
 
@@ -15,12 +14,10 @@ var config = require('../config/textures.js')
  * @constructor
  */
 var TextureLoader = function TextureLoader(game, storage, path) {
-  var config = require('../config/textures.js');
-
   this.game = game;
-  this._storage = storage || new config.storage();
-  this._path = path || config.path;
-  this.config = config;
+  this.config = this.game.ao.config.get('texture');
+  this._storage = storage || new this.config.storage();
+  this._path = path || this.config.path;
   EventManager.eventify(this);
 };
 
@@ -64,7 +61,7 @@ TextureLoader.prototype.load = function(graphic, onLoaded) {
   ));
   graphic.texture = texture;
 
-  PIXI.Texture.addTextureToCache(texture, graphic.grh);
+  PIXI.Texture.addTextureToCache(texture.BaseTexture, String.valueOf(graphic.grh));
   return onLoaded(graphic, texture);
 };
 

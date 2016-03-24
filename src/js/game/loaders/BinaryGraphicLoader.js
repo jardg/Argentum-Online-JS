@@ -2,8 +2,7 @@
  * Module dependencies
  * @type {configuration|exports|module.exports}
  */
-var loaders = require('../config/loaders.js')
-  , EventManager = require('../managers/EventManager.js')
+var EventManager = require('../managers/EventManager.js')
   , BufferAdapter = require('../adapters/BufferAdapter.js')
   , Graphic = require('../models/Graphic.js')
   , _ = require('lodash');
@@ -17,8 +16,9 @@ var loaders = require('../config/loaders.js')
  */
 var BinaryGraphicLoader = function BinaryGraphicLoader(game, storage, path) {
   this.game = game;
-  this._path = path || loaders.graphic.path;
-  this._storage = storage;
+  this.config = this.game.ao.config.get('loaders');
+  this._path = path || this.config.graphic.path;
+  this._storage = storage || new this.config.graphic.storage();
   EventManager.eventify(this);
 };
 

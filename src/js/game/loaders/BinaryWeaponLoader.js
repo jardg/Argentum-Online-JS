@@ -1,9 +1,8 @@
 /**
  * Module dependencies
- * @type {configuration|exports|module.exports}
+ * @type {*|exports|module.exports}
  */
-var loaders = require('../config/loaders.js')
-  , EventManager = require('../managers/EventManager.js')
+var EventManager = require('../managers/EventManager.js')
   , Weapon = require('../models/Weapon.js')
   , ini = require('rt-node-ini')
   , _ = require('lodash');
@@ -17,7 +16,8 @@ var loaders = require('../config/loaders.js')
  */
 var BinaryWeaponLoader = function BinaryWeaponLoader(game, storage, path) {
   this.game = game;
-  this._path =  path || loaders.weapon.path;
+  this.config = this.game.ao.config.get('loaders');
+  this._path =  path || this.config.weapon.path;
   this._storage = storage;
   EventManager.eventify(this);
 };
