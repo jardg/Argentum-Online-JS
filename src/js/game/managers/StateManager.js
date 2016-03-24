@@ -2,8 +2,7 @@
  * Node module dependencies
  * @type {*|exports|module.exports}
  */
-var states = require('../config/states.js')
-  , _ = require('lodash');
+var _ = require('lodash');
 
 /**
  * StateManager class - Manages all states and it's dependencies
@@ -17,6 +16,18 @@ var StateManager = function(game) {
    * @type Phaser
    */
   this.game = game;
+
+  /**
+   * Saves the configuration file structure into this object
+   * @type {states}
+   */
+  this.config = this.game.ao.config.get('states');
+
+  /**
+   * Automatically start this manager.
+   * This is the complete game entry point. Enjoy it.
+   */
+  this.init();
 
 };
 
@@ -34,7 +45,7 @@ StateManager.prototype = {
   init: function() {
     var self = this;
 
-    _.each(states, function(state, key) {
+    _.each(this.config, function(state, key) {
       self.game.state.add(key, state.controller, state.autostart || false);
     });
 

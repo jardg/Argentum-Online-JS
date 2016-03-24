@@ -1,9 +1,8 @@
 /**
  * Module dependencies
- * @type {configuration|exports|module.exports}
+ * @type {*|exports|module.exports}
  */
-var loaders = require('../config/loaders.js')
-  , EventManager = require('../managers/EventManager.js')
+var EventManager = require('../managers/EventManager.js')
   , Shield = require('../models/Shield.js')
   , ini = require('rt-node-ini')
   , _ = require('lodash');
@@ -17,7 +16,8 @@ var loaders = require('../config/loaders.js')
  */
 var BinaryShieldLoader = function BinaryShieldLoader(game, storage, path) {
   this.game = game;
-  this._path = path || loaders.shield.path;
+  this.config = this.game.ao.config.get('loaders');
+  this._path = path || this.config.shield.path;
   this._storage = storage;
   EventManager.eventify(this);
 };

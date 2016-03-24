@@ -11,12 +11,6 @@ module.exports = {
   path: 'images/',
 
   /**
-   * Driver to use for Texture Managing
-   * @type {TextureManager}
-   */
-  driver: require('../managers/TextureManager.js'),
-
-  /**
    * Driver used to retrieve and load single texture files
    * @type {*}
    */

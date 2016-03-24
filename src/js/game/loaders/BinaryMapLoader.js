@@ -1,9 +1,8 @@
 /**
  * Module dependencies
- * @type {configuration|exports|module.exports}
+ * @type {*|exports|module.exports}
  */
-var config = require('../config/maps.js')
-  , EventManager = require('../managers/EventManager.js')
+var EventManager = require('../managers/EventManager.js')
   , BufferAdapter = require('../adapters/BufferAdapter.js')
   , Map = require('../models/Map.js')
   , _ = require('lodash');
@@ -17,11 +16,10 @@ var config = require('../config/maps.js')
  * @constructor
  */
 var BinaryMapLoader = function BinaryMapLoader(game, storage, path) {
-  var config = require('../config/maps.js');
   this.game = game;
-  this._path = path || config.path;
+  this.config = this.game.ao.config.get('maps');
+  this._path = path || this.config.path;
   this._storage = storage;
-  this.config = config;
   EventManager.eventify(this);
 };
 
@@ -58,7 +56,7 @@ BinaryMapLoader.prototype.process = function(key, buffer) {
   var reader = new BufferAdapter(buffer, true);
 
   var map = new this.config.model(game, key);
-  map.loader.load(reader);
+  map.loader.load(reader, this.game);
 
   this.fire('onLoaded', [map], this);
   return buffer;
