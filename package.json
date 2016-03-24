@@ -1,6 +1,6 @@
 {
   "name": "argentum-online-js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Argentum Online MMORPG JavaScript Development SDK",
   "main": "build/js/app.min.js",
   "scripts": {
